@@ -1,5 +1,10 @@
 package gregicadditions;
 
+import gregicadditions.item.GAMetaBlocks;
+import gregtech.api.recipes.RecipeMaps;
+import gregtech.api.recipes.machines.FuelRecipeMap;
+import gregtech.api.render.ICubeRenderer;
+import gregtech.api.render.Textures;
 import gregtech.api.unification.Element;
 import gregtech.api.unification.material.MaterialIconType;
 import gregtech.api.unification.material.Materials;
@@ -10,6 +15,10 @@ import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.common.MetaFluids;
+import gregtech.common.blocks.BlockMetalCasing;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.metatileentities.multi.electric.generator.MetaTileEntityLargeTurbine;
+import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
@@ -148,6 +157,19 @@ public class GAEnums {
         }
 
 
+    }
+
+    public static void preInit2() {
+        // Turbine Overrides
+        EnumHelper.addEnum(MetaTileEntityLargeTurbine.TurbineType.class, "STEAM_OVERRIDE",
+                new Class[]{FuelRecipeMap.class, IBlockState.class, ICubeRenderer.class, boolean.class},
+                RecipeMaps.STEAM_TURBINE_FUELS, MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID), Textures.SOLID_STEEL_CASING, true);
+        EnumHelper.addEnum(MetaTileEntityLargeTurbine.TurbineType.class, "GAS_OVERRIDE",
+                new Class[]{FuelRecipeMap.class, IBlockState.class, ICubeRenderer.class, boolean.class},
+                RecipeMaps.GAS_TURBINE_FUELS, MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STAINLESS_CLEAN), Textures.CLEAN_STAINLESS_STEEL_CASING, false);
+        EnumHelper.addEnum(MetaTileEntityLargeTurbine.TurbineType.class, "PLASMA_OVERRIDE",
+                new Class[]{FuelRecipeMap.class, IBlockState.class, ICubeRenderer.class, boolean.class},
+                RecipeMaps.PLASMA_GENERATOR_FUELS, MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.TUNGSTENSTEEL_ROBUST), Textures.ROBUST_TUNGSTENSTEEL_CASING, true);
     }
 
     public static final Predicate<Material> dust = mat -> mat instanceof DustMaterial;
