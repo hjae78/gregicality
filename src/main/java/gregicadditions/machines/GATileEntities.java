@@ -50,6 +50,7 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.render.ICubeRenderer;
 import gregtech.api.render.Textures;
 import gregtech.api.unification.material.Materials;
+import gregtech.api.unification.material.type.IngotMaterial;
 import gregtech.api.unification.material.type.Material;
 import gregtech.api.unification.material.type.SolidMaterial;
 import gregtech.api.util.GTLog;
