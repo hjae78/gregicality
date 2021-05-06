@@ -26,6 +26,9 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.gui.recipes.RecipeLayout;
 import net.minecraft.client.resources.I18n;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoRecipeWrapper> {
     private final IDrawable background;
     private final IGuiHelper guiHelper;
@@ -36,76 +39,82 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
     }
 
     public static void registerRecipes(IModRegistry registry) {
-        registry.addRecipes(Lists.newArrayList(
-                new MultiblockInfoRecipeWrapper(new CentralMonitorInfo()),
-                new MultiblockInfoRecipeWrapper(new ElectricBlastFurnaceInfo()),
-                new MultiblockInfoRecipeWrapper(new CrackerUnitInfo()),
-                new MultiblockInfoRecipeWrapper(new DieselEngineInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new DistillationTowerInfo()),
-                new MultiblockInfoRecipeWrapper(new ImplosionCompressorInfo()),
-                new MultiblockInfoRecipeWrapper(new MultiSmelterInfo()),
-                new MultiblockInfoRecipeWrapper(new VacuumFreezerInfo()),
-                new MultiblockInfoRecipeWrapper(new PyrolyseOvenInfo()),
-                new MultiblockInfoRecipeWrapper(new AssemblyLineInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new FusionReactor1Info()),
-                new LargeMultiblockInfoRecipeWrapper(new FusionReactor2Info()),
-                new LargeMultiblockInfoRecipeWrapper(new FusionReactor3Info()),
-                new MultiblockInfoRecipeWrapper(new ProcessingArrayInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeThermalCentrifugeInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeElectrolyzerInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeCentrifugeInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeCuttingInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeMixerInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeMultiUseInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new LargeMaceratorInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeSifterInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeWashingPlantInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeWiremillInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeChemicalReactorInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeExtruderInfo()),
-                new MultiblockInfoRecipeWrapper(new VolcanusInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new LargeAssemblerInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeBenderAndFormingInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[0])),
-                new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[1])),
-                new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[2])),
-                new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_STEAM_TURBINE)),
-                new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_GAS_TURBINE)),
-                new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_PLASMA_TURBINE)),
-                new LargeMultiblockInfoRecipeWrapper(new HotCoolantTurbineInfo(GATileEntities.HOT_COOLANT_TURBINE)),
-                new LargeMultiblockInfoRecipeWrapper(new NuclearReactorInfo(GATileEntities.NUCLEAR_REACTOR)),
-                new LargeMultiblockInfoRecipeWrapper(new NuclearReactorInfo(GATileEntities.NUCLEAR_BREEDER)),
-                new LargeMultiblockInfoRecipeWrapper(new LargeCircuitAssemblyLineInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeTransformerInfo()),
-                new MultiblockInfoRecipeWrapper(new IndustrialPrimitiveBlastFurnaceInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new AdvancedDistillationTowerInfo()),
-                new MultiblockInfoRecipeWrapper(new CryogenicFreezerInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new ChemicalPlantInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new LargeRocketEngineInfo()),
-                new MultiblockInfoRecipeWrapper(new AlloyBlastFurnaceInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeForgeHammerInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new LargeNaquadahReactorInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new BatteryTowerInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new HyperReactor1Info()),
-                new LargeMultiblockInfoRecipeWrapper(new HyperReactor2Info()),
-                new LargeMultiblockInfoRecipeWrapper(new HyperReactor3Info()),
-                new LargeMultiblockInfoRecipeWrapper(new FusionReactor4Info()),
-                new LargeMultiblockInfoRecipeWrapper(new GasCentrifugeInfo()),
-                new MultiblockInfoRecipeWrapper(new QubitComputerInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new DrillingRigInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new StellarForgeInfo()),
-                new MultiblockInfoRecipeWrapper(new LargeEngraverInfo()),
-                new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo2()),
-                new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo3()),
-                new LargeMultiblockInfoRecipeWrapper(new BioReactorInfo()),
-                new MultiblockInfoRecipeWrapper(new PlasmaCondenserInfo()),
-                new MultiblockInfoRecipeWrapper(new LargePackagerInfo()),
-                new MultiblockInfoRecipeWrapper(new SteamGrinderInfo()),
-                new MultiblockInfoRecipeWrapper(new SteamOvenInfo()),
-                new MultiblockInfoRecipeWrapper(new CosmicRayDetectorInfo()),
-                new MultiblockInfoRecipeWrapper(new ElectricImplosionInfo())
-        ), "gregtech:multiblock_info");
+        List<MultiblockInfoRecipeWrapper> recipeWrappers = new ArrayList<MultiblockInfoRecipeWrapper>() {
+            {
+                // TODO Uncomment this when the NPE is fixed
+//                add(new MultiblockInfoRecipeWrapper(new CentralMonitorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new ElectricBlastFurnaceInfo()));
+                add(new MultiblockInfoRecipeWrapper(new CrackerUnitInfo()));
+                add(new MultiblockInfoRecipeWrapper(new DieselEngineInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new DistillationTowerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new ImplosionCompressorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new MultiSmelterInfo()));
+                add(new MultiblockInfoRecipeWrapper(new VacuumFreezerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new PyrolyseOvenInfo()));
+                add(new MultiblockInfoRecipeWrapper(new AssemblyLineInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new FusionReactor1Info()));
+                add(new LargeMultiblockInfoRecipeWrapper(new FusionReactor2Info()));
+                add(new LargeMultiblockInfoRecipeWrapper(new FusionReactor3Info()));
+                add(new MultiblockInfoRecipeWrapper(new ProcessingArrayInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeThermalCentrifugeInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeElectrolyzerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeCentrifugeInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeCuttingInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeMixerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeMultiUseInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeMaceratorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeSifterInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeWashingPlantInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeWiremillInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeChemicalReactorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeExtruderInfo()));
+                add(new MultiblockInfoRecipeWrapper(new VolcanusInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeAssemblerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeBenderAndFormingInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[0])));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[1])));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[2])));
+                add(new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_STEAM_TURBINE)));
+                add(new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_GAS_TURBINE)));
+                add(new MultiblockInfoRecipeWrapper(new LargeTurbineInfo(GATileEntities.LARGE_PLASMA_TURBINE)));
+                add(new LargeMultiblockInfoRecipeWrapper(new HotCoolantTurbineInfo(GATileEntities.HOT_COOLANT_TURBINE)));
+                add(new LargeMultiblockInfoRecipeWrapper(new NuclearReactorInfo(GATileEntities.NUCLEAR_REACTOR)));
+                add(new LargeMultiblockInfoRecipeWrapper(new NuclearReactorInfo(GATileEntities.NUCLEAR_BREEDER)));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeCircuitAssemblyLineInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeTransformerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new IndustrialPrimitiveBlastFurnaceInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new AdvancedDistillationTowerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new CryogenicFreezerInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new ChemicalPlantInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeRocketEngineInfo()));
+                add(new MultiblockInfoRecipeWrapper(new AlloyBlastFurnaceInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeForgeHammerInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new LargeNaquadahReactorInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new BatteryTowerInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new HyperReactor1Info()));
+                add(new LargeMultiblockInfoRecipeWrapper(new HyperReactor2Info()));
+                add( new LargeMultiblockInfoRecipeWrapper(new HyperReactor3Info()));
+                add(new LargeMultiblockInfoRecipeWrapper(new FusionReactor4Info()));
+                add(new LargeMultiblockInfoRecipeWrapper(new GasCentrifugeInfo()));
+                add(new MultiblockInfoRecipeWrapper(new QubitComputerInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new DrillingRigInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new StellarForgeInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeEngraverInfo()));
+                add(new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo2()));
+                add(new LargeMultiblockInfoRecipeWrapper(new VoidMinerInfo3()));
+                add(new LargeMultiblockInfoRecipeWrapper(new BioReactorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new PlasmaCondenserInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargePackagerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new SteamGrinderInfo()));
+                add(new MultiblockInfoRecipeWrapper(new SteamOvenInfo()));
+                add(new MultiblockInfoRecipeWrapper(new CosmicRayDetectorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new ElectricImplosionInfo()));
+            }};
+
+        for (MultiblockInfoRecipeWrapper recipeWrapper : recipeWrappers) {
+            registry.addRecipes(new ArrayList<MultiblockInfoRecipeWrapper>() {{ add(recipeWrapper); }}, "gregtech:multiblock_info");
+        }
     }
 
     @Override
