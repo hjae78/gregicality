@@ -36,8 +36,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
@@ -65,7 +65,7 @@ public class TileEntityLargeMultiUse extends LargeSimpleRecipeMapMultiblockContr
     private int pos;
 
     public TileEntityLargeMultiUse(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
-        super(metaTileEntityId, recipeMap, GAConfig.multis.largeMultiUse.euPercentage, GAConfig.multis.largeMultiUse.durationPercentage, GAConfig.multis.largeMultiUse.chancedBoostPercentage, GAConfig.multis.largeMultiUse.stack);
+        super(metaTileEntityId, recipeMap, GAConfig.multis.largeMultiUse.euPercentage, GAConfig.multis.largeMultiUse.durationPercentage, GAConfig.multis.largeMultiUse.chancedBoostPercentage, GAConfig.multis.largeMultiUse.stack, false);
         this.recipeMap = recipeMap;
         pos = Arrays.asList(possibleRecipe).indexOf(recipeMap);
     }
@@ -192,7 +192,7 @@ public class TileEntityLargeMultiUse extends LargeSimpleRecipeMapMultiblockContr
         maxVoltage = (long) (Math.pow(4, min) * 8);
     }
 
-    @NotNull
+    @Nonnull
     @Override
     protected OrientedOverlayRenderer getFrontOverlay() {
         switch (pos) {

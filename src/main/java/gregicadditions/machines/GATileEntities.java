@@ -242,7 +242,7 @@ public class GATileEntities {
 
     public static MetaTileEntityPlasmaCondenser PLASMA_CONDENSER;
 
-    public static List<GASimpleMachineMetaTileEntity> DISASSEMBLER = new ArrayList<>();
+    public static MTE<?>[] DISASSEMBLER = new MTE[14];
     public static MetaTileEntityElectricImplosion ELECTRIC_IMPLOSION;
 
     public static void init() {
@@ -773,13 +773,7 @@ public class GATileEntities {
 
         }
 
-        MASS_FAB[0] = create(2175, new SimpleMachineMetaTileEntity(location("mass_fab.lv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 1));
-        MASS_FAB[1] = create(2176, new SimpleMachineMetaTileEntity(location("mass_fab.mv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 2));
-        MASS_FAB[2] = create(2177, new SimpleMachineMetaTileEntity(location("mass_fab.hv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 3));
-        MASS_FAB[3] = create(2178, new SimpleMachineMetaTileEntity(location("mass_fab.ev"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 4));
         if (GAConfig.GT5U.highTierMassFabs) {
-            MASS_FAB[4] = create(2179, new SimpleMachineMetaTileEntity(location("mass_fab.iv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 5));
-            MASS_FAB[5] = create(2180, new SimpleMachineMetaTileEntity(location("mass_fab.luv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 6));
             MASS_FAB[6] = create(2181, new SimpleMachineMetaTileEntity(location("mass_fab.zpm"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 7));
             MASS_FAB[7] = create(2182, new SimpleMachineMetaTileEntity(location("mass_fab.uv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 8));
             MASS_FAB[8] = create(3449, new GASimpleMachineMetaTileEntity(location("mass_fab.uhv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 9));
@@ -787,16 +781,9 @@ public class GATileEntities {
             MASS_FAB[10] = create(3451, new GASimpleMachineMetaTileEntity(location("mass_fab.uiv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 11));
             MASS_FAB[11] = create(3452, new GASimpleMachineMetaTileEntity(location("mass_fab.umv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 12));
             MASS_FAB[12] = create(3453, new GASimpleMachineMetaTileEntity(location("mass_fab.uxv"), GARecipeMaps.MASS_FAB_RECIPES, ClientHandler.MASS_FAB_OVERLAY, 13));
-
         }
 
-        REPLICATOR[0] = create(2183, new SimpleMachineMetaTileEntity(location("replicator.lv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 1));
-        REPLICATOR[1] = create(2184, new SimpleMachineMetaTileEntity(location("replicator.mv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 2));
-        REPLICATOR[2] = create(2185, new SimpleMachineMetaTileEntity(location("replicator.hv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 3));
-        REPLICATOR[3] = create(2186, new SimpleMachineMetaTileEntity(location("replicator.ev"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 4));
         if (GAConfig.GT5U.highTierReplicators) {
-            REPLICATOR[4] = create(2187, new SimpleMachineMetaTileEntity(location("replicator.iv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 5));
-            REPLICATOR[5] = create(2188, new SimpleMachineMetaTileEntity(location("replicator.luv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 6));
             REPLICATOR[6] = create(2189, new SimpleMachineMetaTileEntity(location("replicator.zpm"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 7));
             REPLICATOR[7] = create(2190, new SimpleMachineMetaTileEntity(location("replicator.uv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 8));
             REPLICATOR[8] = create(3444, new GASimpleMachineMetaTileEntity(location("replicator.uhv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 9));
@@ -804,7 +791,6 @@ public class GATileEntities {
             REPLICATOR[10] = create(3446, new GASimpleMachineMetaTileEntity(location("replicator.uiv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 11));
             REPLICATOR[11] = create(3447, new GASimpleMachineMetaTileEntity(location("replicator.umv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 12));
             REPLICATOR[12] = create(3448, new GASimpleMachineMetaTileEntity(location("replicator.uxv"), GARecipeMaps.REPLICATOR_RECIPES, ClientHandler.REPLICATOR_OVERLAY, 13));
-
         }
 
         CENTRAL_MONITOR = GregTechAPI.registerMetaTileEntity(2499, new MetaTileEntityCentralMonitor(location("central_monitor")));
@@ -1155,13 +1141,13 @@ public class GATileEntities {
             id = 4198;
             for (int i = 1; i < GAValues.V.length - 1; i++) {
                 final int tier = i; // used for inner class
-                DISASSEMBLER.add(GregTechAPI.registerMetaTileEntity(id++, new GASimpleMachineMetaTileEntity(location("disassembler." + GAValues.VN[i].toLowerCase()), GARecipeMaps.DISASSEMBLER_RECIPES, Textures.ASSEMBLER_OVERLAY, i) {
+                DISASSEMBLER[i] = create(id++, new GASimpleMachineMetaTileEntity(location("disassembler." + GAValues.VN[i].toLowerCase()), GARecipeMaps.DISASSEMBLER_RECIPES, Textures.ASSEMBLER_OVERLAY, i) {
                     @Override
                     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
                         tooltip.add(I18n.format("gtadditions.machine.disassembler.tooltip", GAValues.VOLTAGE_NAMES[tier]));
                         super.addInformation(stack, player, tooltip, advanced);
                     }
-                }));
+                });
             }
         }
         ELECTRIC_IMPLOSION = GregTechAPI.registerMetaTileEntity(4211, new MetaTileEntityElectricImplosion(location("electric_implosion")));

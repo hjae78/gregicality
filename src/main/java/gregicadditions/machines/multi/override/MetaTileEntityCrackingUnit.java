@@ -102,13 +102,6 @@ public class MetaTileEntityCrackingUnit extends gregtech.common.metatileentities
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
-        if (!isStructureFormed()) {
-            ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");
-            tooltip.setStyle(new Style().setColor(TextFormatting.GRAY));
-            textList.add(new TextComponentTranslation("gregtech.multiblock.invalid_structure")
-                    .setStyle(new Style().setColor(TextFormatting.RED)
-                            .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
-        }
         if (isStructureFormed()) {
             IEnergyContainer energyContainer = recipeMapWorkable.getEnergyContainer();
             if (energyContainer != null && energyContainer.getEnergyCapacity() > 0) {
@@ -135,6 +128,10 @@ public class MetaTileEntityCrackingUnit extends gregtech.common.metatileentities
         if (isStructureFormed()) {
             textList.add(new TextComponentTranslation("gregtech.multiblock.multi_furnace.heating_coil_level", heatingCoilLevel));
             textList.add(new TextComponentTranslation("gregtech.multiblock.multi_furnace.heating_coil_discount", heatingCoilDiscount));
+        } else {
+            ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip", new Object[0]);
+            tooltip.setStyle((new Style()).setColor(TextFormatting.GRAY));
+            textList.add((new TextComponentTranslation("gregtech.multiblock.invalid_structure", new Object[0])).setStyle((new Style()).setColor(TextFormatting.RED).setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         }
     }
 
@@ -144,7 +141,7 @@ public class MetaTileEntityCrackingUnit extends gregtech.common.metatileentities
                 .aisle("HCHCH", "HCHCH", "HCHCH")
                 .aisle("HCHCH", "H###H", "HCHCH")
                 .aisle("HCHCH", "HCOCH", "HCHCH")
-                .setAmountAtLeast('L', 20)
+                .setAmountAtLeast('L', 16)
                 .where('O', selfPredicate())
                 .where('L', statePredicate(getCasingState()))
                 .where('H', statePredicate(getCasingState()).or(abilityPartPredicate(ALLOWED_ABILITIES)))

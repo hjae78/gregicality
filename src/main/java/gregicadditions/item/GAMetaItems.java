@@ -1,40 +1,30 @@
 package gregicadditions.item;
 
-import gregicadditions.utils.GALog;
 import gregtech.api.items.armor.ArmorMetaItem;
 import gregtech.api.items.metaitem.MetaItem;
-import gregtech.api.unification.material.MaterialIconSet;
+import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.Materials;
 import gregtech.api.unification.ore.OrePrefix;
-import gregtech.common.items.MetaItems;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.List;
 
+import static gregicadditions.GAMaterials.Snow;
+import static gregtech.api.unification.ore.OrePrefix.*;
+import static gregtech.common.items.MetaItems.WOODEN_FORM_BRICK;
+
 public class GAMetaItems {
 
-    private static List<MetaItem<?>> ITEMS = MetaItem.getMetaItems();
+    private static final List<MetaItem<?>> ITEMS = MetaItem.getMetaItems();
 
-    public static MetaItem<?>.MetaValueItem GLASS_FIBER;
     public static MetaItem<?>.MetaValueItem PETRI_DISH;
     public static MetaItem<?>.MetaValueItem COMPRESSED_COKE_CLAY;
-    //    public static MetaItem<?>.MetaValueItem COMPRESSED_FIRECLAY;
-//    public static MetaItem<?>.MetaValueItem FIRECLAY_BRICK;
     public static MetaItem<?>.MetaValueItem ENERGY_MODULE;
     public static MetaItem<?>.MetaValueItem ENERGY_CLUSTER;
     public static MetaItem<?>.MetaValueItem MAX_BATTERY;
-
-    //more smd
-    public static MetaItem<?>.MetaValueItem ARRAY_RESISTOR;
-    public static MetaItem<?>.MetaValueItem ARRAY_DIODE;
-    public static MetaItem<?>.MetaValueItem ARRAY_CAPACITOR;
-    public static MetaItem<?>.MetaValueItem ARRAY_TRANSISTOR;
 
     public static MetaItem<?>.MetaValueItem SMD_CAPACITOR_REFINED;
     public static MetaItem<?>.MetaValueItem SMD_CAPACITOR_NANO;
@@ -125,6 +115,8 @@ public class GAMetaItems {
     public static MetaItem<?>.MetaValueItem ADVANCED_BOARD;
     public static MetaItem<?>.MetaValueItem EXTREME_BOARD;
     public static MetaItem<?>.MetaValueItem ELITE_BOARD;
+    public static MetaItem<?>.MetaValueItem KAPTON_BOARD;
+    public static MetaItem<?>.MetaValueItem KAPTON_CIRCUIT_BOARD;
     public static MetaItem<?>.MetaValueItem MASTER_BOARD;
 
     public static MetaItem<?>.MetaValueItem ELECTRODE_APATITE;
@@ -191,6 +183,7 @@ public class GAMetaItems {
     public static MetaItem<?>.MetaValueItem INSULATING_TAPE;
 
     public static MetaItem<?>.MetaValueItem HAND_PUMP;
+    public static MetaItem<?>.MetaValueItem FREEDOM_WRENCH;
 
 
     public static MetaItem<?>.MetaValueItem NUCLEAR_WASTE;
@@ -346,7 +339,6 @@ public class GAMetaItems {
     public static MetaItem<?>.MetaValueItem ARAM_WAFER;
 
     public static MetaItem<?>.MetaValueItem PLATE_FIELD_SHAPE;
-    public static MetaItem<?>.MetaValueItem DUST_FIELD_SHAPE;
     public static MetaItem<?>.MetaValueItem INGOT_FIELD_SHAPE;
     public static MetaItem<?>.MetaValueItem PLASMA_CONTAINMENT_CELL;
     public static MetaItem<?>.MetaValueItem RHENIUM_PLASMA_CONTAINMENT_CELL;
@@ -373,9 +365,6 @@ public class GAMetaItems {
     public static MetaItem<?>.MetaValueItem LITHIUM_SIEVE;
     public static MetaItem<?>.MetaValueItem LITHIUM_SATURATED_LITHIUM_SIEVE;
     public static MetaItem<?>.MetaValueItem NANOTOME;
-    public static MetaItem<?>.MetaValueItem WELL_PIPE;
-    public static MetaItem<?>.MetaValueItem RIG_DRILL;
-    public static MetaItem<?>.MetaValueItem WELL_CONNECTOR_PIECE;
     public static MetaItem<?>.MetaValueItem MEMORY_FOAM_BLOCK;
     public static MetaItem<?>.MetaValueItem LASER_DIODE;
     public static MetaItem<?>.MetaValueItem LASER_COOLING_UNIT;
@@ -498,9 +487,11 @@ public class GAMetaItems {
     public static MetaItem<?>.MetaValueItem CHARGED_LEPTON_TRAP_CRYSTAL;
     public static MetaItem<?>.MetaValueItem NANOSILICON_CATHODE;
 
+    public static MetaItem<?>.MetaValueItem SHAPE_EXTRUDER_SMALL_GEAR;
+
 
     // GA oredict items
-    public static final GAOredictItem.OreDictItem Test = new GAOredictItem.OreDictItem(0, "test", Materials.Iron.materialRGB, MaterialIconSet.SHINY, OrePrefix.plateDense);
+    //public static final GAOredictItem.OreDictItem Test = new GAOredictItem.OreDictItem(0, "test", Materials.Iron.materialRGB, MaterialIconSet.SHINY, OrePrefix.plateDense);
 
 
     public static void init() {
@@ -524,45 +515,11 @@ public class GAMetaItems {
                 ((GAMetaItem) item).registerOreDict();
             }
         }
-    }
 
-    public static void registerRecipes() {
-        for (MetaItem<?> item : ITEMS) {
-            if (item instanceof GAMetaTool) ((GAMetaTool) item).registerRecipes();
-        }
-    }
-
-    public static ItemStack getFilledCell(Fluid fluid, int count) {
-        ItemStack fluidCell = MetaItems.FLUID_CELL.getStackForm().copy();
-        IFluidHandlerItem fluidHandlerItem = fluidCell.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-        try {
-            fluidHandlerItem.fill(new FluidStack(fluid, 1000), true);
-
-        } catch (Exception e) {
-            GALog.logger.error("The fluid " + fluid.toString() + " failed to do something with getFilledCell");
-            GALog.logger.error(e);
-            fluidHandlerItem.fill(new FluidStack(FluidRegistry.WATER, 1000), true);
-        }
-        fluidCell = fluidHandlerItem.getContainer();
-        fluidCell.setCount(count);
-        return fluidCell;
-    }
-
-    public static ItemStack getFilledCell(Fluid fluid) {
-        return getFilledCell(fluid, 1);
-    }
-
-    public static boolean hasPrefix(ItemStack stack, String prefix, String... ignore) {
-        for (int i : OreDictionary.getOreIDs(stack)) {
-            if (OreDictionary.getOreName(i).startsWith(prefix)) {
-                boolean valid = true;
-                for (String s : ignore) {
-                    if (OreDictionary.getOreName(i).startsWith(s)) valid = false;
-                }
-                if (!valid) continue;
-                return true;
-            }
-        }
-        return false;
+        // Misc OreDictionary Additions
+        OreDictUnifier.registerOre(new ItemStack(Items.SNOWBALL), dust, Snow);
+        OreDictUnifier.registerOre(new ItemStack(Blocks.SNOW), block, Snow);
+        OreDictionary.registerOre("formWood", WOODEN_FORM_BRICK.getStackForm());
+        OreDictionary.registerOre("ingotPyroliticCarbon", PYROLYTIC_CARBON.getStackForm()); // for NC compatibility
     }
 }

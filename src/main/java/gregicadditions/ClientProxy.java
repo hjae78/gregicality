@@ -1,15 +1,13 @@
 package gregicadditions;
 
-import codechicken.lib.util.ItemNBTUtils;
-import com.mojang.realmsclient.gui.ChatFormatting;
 import gregicadditions.blocks.GABlockOre;
 import gregicadditions.blocks.GAMetalCasing;
+import gregicadditions.client.model.ReTexturedModelLoader;
+import gregicadditions.client.renderer.OpticalFiberRenderer;
 import gregicadditions.input.Keybinds;
 import gregicadditions.item.GADustItem;
 import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.materials.SimpleDustMaterial;
-import gregicadditions.materials.SimpleFluidMaterial;
-import gregicadditions.renderer.OpticalFiberRenderer;
 import gregicadditions.utils.GALog;
 import gregtech.api.unification.OreDictUnifier;
 import net.minecraft.block.state.IBlockState;
@@ -19,8 +17,10 @@ import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -57,6 +57,7 @@ public class ClientProxy extends CommonProxy {
         GALog.logger.info(Minecraft.getMinecraft().getFramebuffer().isStencilEnabled());
         Keybinds.initBinds();
         OpticalFiberRenderer.preInit();
+        ModelLoaderRegistry.registerLoader(new ReTexturedModelLoader());
     }
 
 
@@ -82,22 +83,10 @@ public class ClientProxy extends CommonProxy {
             if (oreDictName.isPresent() && GADustItem.oreDictToSimpleDust.containsKey(oreDictName.get())) {
                 SimpleDustMaterial material = SimpleDustMaterial.GA_DUSTS.get((short) itemStack.getItemDamage());
                 if (material != null) {
-                    String formula = material.chemicalFormula;
+                    String formula = material.getFormula();
                     if (formula != null && !formula.isEmpty() && event.getToolTip().size() == 0) {
-                        event.getToolTip().add(1, ChatFormatting.GRAY.toString() + material.chemicalFormula);
+                        event.getToolTip().add(1, TextFormatting.GRAY.toString() + material.getFormula());
                     }
-                }
-            }
-        }
-
-        if (ItemNBTUtils.hasTag(itemStack)) {
-
-            // Vanilla bucket
-            String fluidName = ItemNBTUtils.getString(itemStack, "FluidName");
-            if (fluidName != null) {
-                SimpleFluidMaterial material = SimpleFluidMaterial.GA_FLUIDS.get(fluidName);
-                if (material != null && material.chemicalFormula != null && !material.chemicalFormula.isEmpty()) {
-                    event.getToolTip().add(1, ChatFormatting.GRAY + material.chemicalFormula);
                 }
             }
         }

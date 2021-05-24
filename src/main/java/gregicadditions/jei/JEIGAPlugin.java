@@ -2,13 +2,13 @@ package gregicadditions.jei;
 
 import gregicadditions.Gregicality;
 import gregicadditions.machines.multi.impl.HotCoolantRecipeLogic;
-import gregicadditions.recipes.nuclear.GTHotCoolantRecipeWrapper;
-import gregicadditions.recipes.nuclear.HotCoolantRecipeMap;
-import gregicadditions.recipes.nuclear.HotCoolantRecipeMapCategory;
-import gregicadditions.recipes.wrapper.GADrillingRigCategory;
-import gregicadditions.recipes.wrapper.GADrillingRigRecipeWrapper;
-import gregicadditions.recipes.wrapper.GARecipeMapCategory;
-import gregicadditions.recipes.wrapper.GARecipeWrapper;
+import gregicadditions.recipes.impl.nuclear.GTHotCoolantRecipeWrapper;
+import gregicadditions.recipes.impl.nuclear.HotCoolantRecipeMap;
+import gregicadditions.recipes.impl.nuclear.HotCoolantRecipeMapCategory;
+import gregicadditions.recipes.compat.jei.GADrillingRigCategory;
+import gregicadditions.recipes.compat.jei.GADrillingRigRecipeWrapper;
+import gregicadditions.recipes.compat.jei.GARecipeMapCategory;
+import gregicadditions.recipes.compat.jei.GARecipeWrapper;
 import gregicadditions.worldgen.PumpjackHandler;
 import gregtech.api.GTValues;
 import gregtech.api.GregTechAPI;
@@ -17,7 +17,6 @@ import gregtech.api.capability.IControllable;
 import gregtech.api.capability.impl.AbstractRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.recipes.RecipeMap;
-import gregtech.api.recipes.machines.RecipeMapFurnace;
 import gregtech.common.items.MetaItems;
 import gregtech.common.metatileentities.MetaTileEntities;
 import mezz.jei.api.*;
@@ -36,6 +35,7 @@ public class JEIGAPlugin implements IModPlugin {
 
     private IIngredientBlacklist itemBlacklist;
     private IIngredientRegistry iItemRegistry;
+    public static IJeiRuntime jeiRuntime;
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -76,7 +76,7 @@ public class JEIGAPlugin implements IModPlugin {
         for (RecipeMap<?> recipeMap : RecipeMap.getRecipeMaps()) {
             List<GARecipeWrapper> recipesList = recipeMap.getRecipeList()
                     .stream().filter(recipe -> !recipe.isHidden() && recipe.hasValidInputsForDisplay())
-                    .map(r -> new GARecipeWrapper(recipeMap, r))
+                    .map(r -> new GARecipeWrapper(r))
                     .collect(Collectors.toList());
             registry.addRecipes(recipesList, Gregicality.MODID + ":" + recipeMap.unlocalizedName);
         }
@@ -101,6 +101,7 @@ public class JEIGAPlugin implements IModPlugin {
 
     @Override
     public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+        this.jeiRuntime = jeiRuntime;
         IRecipeRegistry recipeRegistry = jeiRuntime.getRecipeRegistry();
         IRecipeCategory recipeCategory = recipeRegistry.getRecipeCategory("gregtech:multiblock_info");
 

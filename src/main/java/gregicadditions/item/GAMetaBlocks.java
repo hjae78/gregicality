@@ -5,6 +5,7 @@ import gregicadditions.GAValues;
 import gregicadditions.Gregicality;
 import gregicadditions.blocks.GABlockOre;
 import gregicadditions.blocks.GAMetalCasing;
+import gregicadditions.client.model.IReTexturedModel;
 import gregicadditions.item.components.*;
 import gregicadditions.item.fusion.GACryostatCasing;
 import gregicadditions.item.fusion.GADivertorCasing;
@@ -14,7 +15,7 @@ import gregicadditions.pipelike.opticalfiber.BlockOpticalFiber;
 import gregicadditions.pipelike.opticalfiber.OpticalFiberSize;
 import gregicadditions.pipelike.opticalfiber.tile.TileEntityOpticalFiber;
 import gregicadditions.pipelike.opticalfiber.tile.TileEntityOpticalFiberTickable;
-import gregicadditions.renderer.OpticalFiberRenderer;
+import gregicadditions.client.renderer.OpticalFiberRenderer;
 import gregtech.api.GTValues;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.recipes.machines.FuelRecipeMap;
@@ -50,8 +51,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.commons.lang3.ArrayUtils;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,6 +64,7 @@ public class GAMetaBlocks {
     public static GAMultiblockCasing MUTLIBLOCK_CASING;
     public static GAMultiblockCasing2 MUTLIBLOCK_CASING2;
     public static GASimpleBlock SIMPLE_BLOCK;
+    public static GAExplosive EXPLOSIVE;
     public static GATransparentCasing TRANSPARENT_CASING;
     public static GAQuantumCasing QUANTUM_CASING;
     public static GAMachineCasing MACHINE_CASING;
@@ -119,6 +121,9 @@ public class GAMetaBlocks {
 
         SIMPLE_BLOCK = new GASimpleBlock();
         SIMPLE_BLOCK.setRegistryName("ga_simple_block");
+
+        EXPLOSIVE = new GAExplosive();
+        EXPLOSIVE.setRegistryName("ga_explosive");
 
         REACTOR_CASING = new GAReactorCasing();
         REACTOR_CASING.setRegistryName("ga_reactor_casing");
@@ -286,6 +291,7 @@ public class GAMetaBlocks {
         registerItemModel(QUANTUM_CASING);
         registerItemModel(MUTLIBLOCK_CASING2);
         registerItemModel(SIMPLE_BLOCK);
+        registerItemModel(EXPLOSIVE);
         registerItemModel(REACTOR_CASING);
         registerItemModel(FUSION_CASING);
         registerItemModel(VACUUM_CASING);
@@ -322,7 +328,7 @@ public class GAMetaBlocks {
         });
         ModelLoader.setCustomStateMapper(OPTICAL_FIBER, new DefaultStateMapper() {
             @Override
-            protected @NotNull ModelResourceLocation getModelResourceLocation(IBlockState state) {
+            protected @Nonnull ModelResourceLocation getModelResourceLocation(IBlockState state) {
                 return OpticalFiberRenderer.MODEL_LOCATION;
             }
         });
@@ -332,10 +338,20 @@ public class GAMetaBlocks {
     public static void registerItemModel(Block block) {
         for (IBlockState state : block.getBlockState().getValidStates()) {
             //noinspection ConstantConditions
-            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block),
-                    block.getMetaFromState(state),
-                    new ModelResourceLocation(block.getRegistryName(),
-                            statePropertiesToString(state.getProperties())));
+            ModelResourceLocation resourceLocation = new ModelResourceLocation(block.getRegistryName(), statePropertiesToString(state.getProperties()));
+            ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), block.getMetaFromState(state), resourceLocation);
+            if (block instanceof IReTexturedModel) {
+                ((IReTexturedModel) block).register(state, resourceLocation);
+            }
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
+    public static void registerItemModel(Item item) {
+        ModelResourceLocation resourceLocation = new ModelResourceLocation(item.getRegistryName(), "inventory");
+        ModelLoader.setCustomModelResourceLocation(item, 0, resourceLocation);
+        if (item instanceof IReTexturedModel) {
+            ((IReTexturedModel) item).register(null, resourceLocation);
         }
     }
 

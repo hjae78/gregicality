@@ -1,11 +1,12 @@
 package gregicadditions.coremod.transform;
 
-import gregicadditions.coremod.GAClassTransformer;
+import gregicadditions.coremod.GAClassTransformer.ClassMapper;
+import gregicadditions.coremod.GAClassTransformer.GAMethodVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class NetworkNodeGridTransformer extends GAClassTransformer.ClassMapper {
+public class NetworkNodeGridTransformer extends ClassMapper {
 
     public static final NetworkNodeGridTransformer INSTANCE = new NetworkNodeGridTransformer();
 
@@ -34,7 +35,7 @@ public class NetworkNodeGridTransformer extends GAClassTransformer.ClassMapper {
 
     }
 
-    private static class TransformOnRecipeTransfer extends MethodVisitor {
+    private static class TransformOnRecipeTransfer extends GAMethodVisitor {
 
         TransformOnRecipeTransfer(int api, MethodVisitor mv) {
             super(api, mv);

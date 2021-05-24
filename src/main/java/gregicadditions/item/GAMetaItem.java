@@ -2,6 +2,7 @@ package gregicadditions.item;
 
 import gregicadditions.GAConfig;
 import gregicadditions.GAEnums;
+import gregicadditions.GAValues;
 import gregicadditions.item.behaviors.*;
 import gregicadditions.item.behaviors.monitorPlugin.AdvancedMonitorPluginBehavior;
 import gregicadditions.item.behaviors.monitorPlugin.FakeGuiPluginBehavior;
@@ -29,22 +30,22 @@ import static gregtech.api.unification.material.Materials.Thorium;
 public class GAMetaItem extends MaterialMetaItem {
     public GAMetaItem() {
         super(GAConfig.GT6.addCurvedPlates ? GAEnums.GAOrePrefix.plateCurved : null,
-                GAConfig.GT6.addDoubleIngots ? GAEnums.GAOrePrefix.ingotDouble : null,
+                GAEnums.GAOrePrefix.plateDouble,
                 GAConfig.GT6.addRounds ? GAEnums.GAOrePrefix.round : null,
                 GAEnums.GAOrePrefix.dioxide, GAEnums.GAOrePrefix.nitride, GAEnums.GAOrePrefix.hexafluoride,
                 GAEnums.GAOrePrefix.carbide, GAEnums.GAOrePrefix.nitrite, GAEnums.GAOrePrefix.oxide,
                 GAEnums.GAOrePrefix.depletedFuel, GAEnums.GAOrePrefix.depletedFuelNitride, GAEnums.GAOrePrefix.depletedFuelOxide,
                 GAEnums.GAOrePrefix.depletedFuelTRISO, GAEnums.GAOrePrefix.depletedFuelZirconiumAlloy, GAEnums.GAOrePrefix.fuelCarbide,
                 GAEnums.GAOrePrefix.fuelNitride, GAEnums.GAOrePrefix.fuelOxide, GAEnums.GAOrePrefix.fuelPure, GAEnums.GAOrePrefix.fuelTRISO,
-                GAEnums.GAOrePrefix.fuelZirconiumAlloy, GAEnums.GAOrePrefix.zirconiumAlloy, null, null, null, null, null, null, null, null, null, null, null);
+                GAEnums.GAOrePrefix.fuelZirconiumAlloy, GAEnums.GAOrePrefix.zirconiumAlloy,
+                null, null, null, null, null, null, null, null, null, null, null);
     }
 
     @Override
     public void registerSubItems() {
-        GLASS_FIBER = addItem(21, "component.glass.fiber");
         PETRI_DISH = addItem(23, "component.petri.dish");
 
-        if (Loader.isModLoaded("forestry") && GAConfig.GT6.electrodes) {
+        if (Loader.isModLoaded(GAValues.MODID_FR) && GAConfig.GT6.electrodes) {
             ELECTRODE_APATITE = addItem(108, "electrode.apatite");
             ELECTRODE_BLAZE = addItem(109, "electrode.blaze");
             ELECTRODE_BRONZE = addItem(110, "electrode.bronze");
@@ -53,12 +54,12 @@ public class GAMetaItem extends MaterialMetaItem {
             ELECTRODE_EMERALD = addItem(113, "electrode.emerald");
             ELECTRODE_ENDER = addItem(114, "electrode.ender");
             ELECTRODE_GOLD = addItem(115, "electrode.gold");
-            if (Loader.isModLoaded("ic2") || Loader.isModLoaded("binniecore"))
+            if (Loader.isModLoaded(GAValues.MODID_IC2) || Loader.isModLoaded(GAValues.MODID_BINNIE))
                 ELECTRODE_IRON = addItem(116, "electrode.iron");
             ELECTRODE_LAPIS = addItem(117, "electrode.lapis");
             ELECTRODE_OBSIDIAN = addItem(118, "electrode.obsidian");
-            if (Loader.isModLoaded("extrautils2")) ELECTRODE_ORCHID = addItem(119, "electrode.orchid");
-            if (Loader.isModLoaded("ic2") || Loader.isModLoaded("techreborn") || Loader.isModLoaded("binniecore"))
+            if (Loader.isModLoaded(GAValues.MODID_XU2)) ELECTRODE_ORCHID = addItem(119, "electrode.orchid");
+            if (Loader.isModLoaded(GAValues.MODID_IC2) || Loader.isModLoaded(GAValues.MODID_TR) || Loader.isModLoaded(GAValues.MODID_BINNIE))
                 ELECTRODE_RUBBER = addItem(120, "electrode.rubber");
             ELECTRODE_TIN = addItem(121, "electrode.tin");
         }
@@ -158,6 +159,9 @@ public class GAMetaItem extends MaterialMetaItem {
                 .setMaxStackSize(1)
                 .addComponents(new FluidStats(64000, Integer.MIN_VALUE, Integer.MAX_VALUE, true))
                 .addComponents(new HandPumpBehavior());
+        FREEDOM_WRENCH = addItem(309, "freedom_wrench")
+                .setMaxStackSize(1)
+                .addComponents(new FreedomWrenchBehaviour());
 
         PROTACTINIUM_WASTE = addItem(311, "waste.nuclear").addComponents(new WasteBehavior(Protactinium.getMaterial()));
         NUCLEAR_WASTE = addItem(312, "waste.nuclear").addComponents(new WasteBehavior("waste.nuclear.global", 0xDEDEDE));
@@ -303,7 +307,6 @@ public class GAMetaItem extends MaterialMetaItem {
         DEGENERATE_RHENIUM_PLATE = addItem(430, "degenerate.rhenium.plate");
         DEGENERATE_RHENIUM_DUST = addItem(432, "degenerate.rhenium.dust");
         PLATE_FIELD_SHAPE = addItem(431, "plate.field.shape");
-        DUST_FIELD_SHAPE = addItem(439, "dust.field.shape");
 
         ZBLAN = addItem(433, "zblan");
         ZBLAN_INGOT = addItem(434, "zblan_ingot");
@@ -323,9 +326,6 @@ public class GAMetaItem extends MaterialMetaItem {
         ACRYLIC_YARN = addItem(448, "acrylic_yarn");
         NEUTRON_PLASMA_CONTAINMENT_CELL = addItem(449, "neutron.plasma.containment.cell");
         INGOT_FIELD_SHAPE = addItem(450, "ingot.field.shape");
-        WELL_PIPE = addItem(451,"well_pipe");
-        WELL_CONNECTOR_PIECE = addItem(452,"well_connector_pipe");
-        RIG_DRILL = addItem(453,"rig_drill");
         MEMORY_FOAM_BLOCK = addItem(454,"memory_foam_block");
         LASER_DIODE = addItem(455,"laser_diode");
         LASER_COOLING_UNIT = addItem(456,"laser_cooling_unit");
@@ -483,6 +483,10 @@ public class GAMetaItem extends MaterialMetaItem {
         BATTERY_MEDIUM_FLUORIDE_EMPTY = addItem(582,"medium.fluoride.battery.empty");
         BATTERY_LARGE_FLUORIDE_EMPTY = addItem(583,"large.fluoride.battery.empty");
 
+        KAPTON_BOARD = addItem(584, "board.kapton");
+        KAPTON_CIRCUIT_BOARD = addItem(585, "board_circuit.kapton");
+
+        SHAPE_EXTRUDER_SMALL_GEAR = addItem(586, "shape.extruder.gear.small");
 
         NEURO_PROCESSOR = addItem(15, "processor.neuro");
         PYROLYTIC_CARBON = addItem(16, "pyrolytic_carbon");
@@ -500,13 +504,8 @@ public class GAMetaItem extends MaterialMetaItem {
         MASTER_BOARD = addItem(35, "board.master");
         COMPRESSED_COKE_CLAY = addItem(36, "compressed.coke.clay");
         HOT_IRON_INGOT = addItem(37, "hot_iron_ingot");
-//        COMPRESSED_FIRECLAY = addItem(37, "compressed.fireclay");
-//        FIRECLAY_BRICK = addItem(38, "brick.fireclay").setUnificationData(OrePrefix.ingot, Materials.Fireclay);
 
         MetaItems.COMPRESSED_CLAY.setInvisible();
-//        MetaItems.COMPRESSED_FIRECLAY.setInvisible();
-
-
         MetaItems.DATA_CONTROL_CIRCUIT_IV.setInvisible();
         MetaItems.CRYSTAL_PROCESSOR_IV.setInvisible();
         MetaItems.ADVANCED_CIRCUIT_MV.setInvisible();

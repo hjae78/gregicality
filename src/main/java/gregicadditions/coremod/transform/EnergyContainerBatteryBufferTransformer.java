@@ -1,11 +1,12 @@
 package gregicadditions.coremod.transform;
 
-import gregicadditions.coremod.GAClassTransformer;
+import gregicadditions.coremod.GAClassTransformer.ClassMapper;
+import gregicadditions.coremod.GAClassTransformer.GAMethodVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class EnergyContainerBatteryBufferTransformer extends GAClassTransformer.ClassMapper {
+public class EnergyContainerBatteryBufferTransformer extends ClassMapper {
 
     public static final EnergyContainerBatteryBufferTransformer INSTANCE = new EnergyContainerBatteryBufferTransformer();
 
@@ -39,7 +40,7 @@ public class EnergyContainerBatteryBufferTransformer extends GAClassTransformer.
 
     }
 
-    private static class TransformAcceptEnergyFromNetwork extends MethodVisitor {
+    private static class TransformAcceptEnergyFromNetwork extends GAMethodVisitor {
         static byte now = 0;
 
         TransformAcceptEnergyFromNetwork(int api, MethodVisitor mv) {
@@ -64,7 +65,7 @@ public class EnergyContainerBatteryBufferTransformer extends GAClassTransformer.
         }
     }
 
-    private static class TransformUpdate extends MethodVisitor {
+    private static class TransformUpdate extends GAMethodVisitor {
         static byte now = 0;
         TransformUpdate(int api, MethodVisitor mv) {
             super(api, mv);
@@ -88,7 +89,7 @@ public class EnergyContainerBatteryBufferTransformer extends GAClassTransformer.
         }
     }
 
-    private static class TransformChangeEnergy extends MethodVisitor {
+    private static class TransformChangeEnergy extends GAMethodVisitor {
 
         TransformChangeEnergy(int api, MethodVisitor mv) {
             super(api, mv);

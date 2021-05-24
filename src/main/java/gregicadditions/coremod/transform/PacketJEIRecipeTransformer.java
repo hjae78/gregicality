@@ -1,9 +1,12 @@
 package gregicadditions.coremod.transform;
 
-import gregicadditions.coremod.GAClassTransformer;
-import org.objectweb.asm.*;
+import gregicadditions.coremod.GAClassTransformer.ClassMapper;
+import gregicadditions.coremod.GAClassTransformer.GAMethodVisitor;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
 
-public class PacketJEIRecipeTransformer extends GAClassTransformer.ClassMapper {
+public class PacketJEIRecipeTransformer extends ClassMapper {
 
     public static final PacketJEIRecipeTransformer INSTANCE = new PacketJEIRecipeTransformer();
 
@@ -32,7 +35,7 @@ public class PacketJEIRecipeTransformer extends GAClassTransformer.ClassMapper {
 
     }
 
-    private static class TransformServerPacketData extends MethodVisitor {
+    private static class TransformServerPacketData extends GAMethodVisitor {
 
         TransformServerPacketData(int api, MethodVisitor mv) {
             super(api, mv);

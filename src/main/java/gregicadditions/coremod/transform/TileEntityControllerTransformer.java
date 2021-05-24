@@ -1,11 +1,12 @@
 package gregicadditions.coremod.transform;
 
-import gregicadditions.coremod.GAClassTransformer;
+import gregicadditions.coremod.GAClassTransformer.ClassMapper;
+import gregicadditions.coremod.GAClassTransformer.GAMethodVisitor;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class TileEntityControllerTransformer extends GAClassTransformer.ClassMapper {
+public class TileEntityControllerTransformer extends ClassMapper {
 
     public static final TileEntityControllerTransformer INSTANCE = new TileEntityControllerTransformer();
 
@@ -34,7 +35,7 @@ public class TileEntityControllerTransformer extends GAClassTransformer.ClassMap
 
     }
 
-    private static class TransformFindConnectedBlocksForClient extends MethodVisitor {
+    private static class TransformFindConnectedBlocksForClient extends GAMethodVisitor {
 
         TransformFindConnectedBlocksForClient(int api, MethodVisitor mv) {
             super(api, mv);

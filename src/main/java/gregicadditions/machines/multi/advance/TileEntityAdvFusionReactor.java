@@ -36,6 +36,7 @@ import gregtech.api.multiblock.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.render.ICubeRenderer;
+import gregtech.api.render.OrientedOverlayRenderer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -109,7 +110,7 @@ public class TileEntityAdvFusionReactor extends GARecipeMapMultiblockController 
                 .where('E', tilePredicate((state, tile) -> tile instanceof GAMetaTileEntityEnergyHatch))
                 .setAmountAtMost('I', 3)
                 .where('I', abilityPartPredicate(MultiblockAbility.IMPORT_FLUIDS))
-                .setAmountAtMost('i', 2)
+                .setAmountAtMost('i', 3)
                 .where('i', abilityPartPredicate(MultiblockAbility.EXPORT_FLUIDS))
                 .build();
     }
@@ -255,7 +256,7 @@ public class TileEntityAdvFusionReactor extends GARecipeMapMultiblockController 
         }
         if (this.isStructureFormed()) {
             if (!this.canWork) {
-                textList.add(new TextComponentTranslation("gregicality.multiblock.invalid_configuraion.1"));
+                textList.add(new TextComponentTranslation("gregicality.multiblock.invalid_configuraion.1").setStyle(new Style().setColor(TextFormatting.RED)));
                 textList.add(new TextComponentTranslation("gregicality.multiblock.invalid_configuraion.2"));
             } else {
                 if (!this.recipeMapWorkable.isWorkingEnabled()) {
@@ -284,9 +285,8 @@ public class TileEntityAdvFusionReactor extends GARecipeMapMultiblockController 
     }
 
     @Override
-    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        this.getBaseTexture(null).render(renderState, translation, pipeline);
-        ClientHandler.FUSION_REACTOR_OVERLAY.render(renderState, translation, pipeline, this.getFrontFacing(), this.recipeMapWorkable.isActive());
+    protected OrientedOverlayRenderer getFrontOverlay() {
+        return ClientHandler.FUSION_REACTOR_OVERLAY;
     }
 
     public class AdvFusionRecipeLogic extends GAMultiblockRecipeLogic {
