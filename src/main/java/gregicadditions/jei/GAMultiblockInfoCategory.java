@@ -41,8 +41,7 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
     public static void registerRecipes(IModRegistry registry) {
         List<MultiblockInfoRecipeWrapper> recipeWrappers = new ArrayList<MultiblockInfoRecipeWrapper>() {
             {
-                // TODO Uncomment this when the NPE is fixed
-//                add(new MultiblockInfoRecipeWrapper(new CentralMonitorInfo()));
+                add(new MultiblockInfoRecipeWrapper(new CentralMonitorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new ElectricBlastFurnaceInfo()));
                 add(new MultiblockInfoRecipeWrapper(new CrackerUnitInfo()));
                 add(new MultiblockInfoRecipeWrapper(new DieselEngineInfo()));
@@ -69,7 +68,7 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
                 add(new MultiblockInfoRecipeWrapper(new LargeChemicalReactorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new LargeExtruderInfo()));
                 add(new MultiblockInfoRecipeWrapper(new VolcanusInfo()));
-                add(new LargeMultiblockInfoRecipeWrapper(new LargeAssemblerInfo()));
+                add(new MultiblockInfoRecipeWrapper(new LargeAssemblerInfo()));
                 add(new MultiblockInfoRecipeWrapper(new LargeBenderAndFormingInfo()));
                 add(new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[0])));
                 add(new LargeMultiblockInfoRecipeWrapper(new LargeMinerInfo(GATileEntities.LARGE_MINER[1])));
@@ -110,7 +109,8 @@ public class GAMultiblockInfoCategory implements IRecipeCategory<MultiblockInfoR
                 add(new MultiblockInfoRecipeWrapper(new SteamOvenInfo()));
                 add(new MultiblockInfoRecipeWrapper(new CosmicRayDetectorInfo()));
                 add(new MultiblockInfoRecipeWrapper(new ElectricImplosionInfo()));
-            }};
+            }
+        };
 
         for (MultiblockInfoRecipeWrapper recipeWrapper : recipeWrappers) {
             registry.addRecipes(new ArrayList<MultiblockInfoRecipeWrapper>() {{ add(recipeWrapper); }}, "gregtech:multiblock_info");
