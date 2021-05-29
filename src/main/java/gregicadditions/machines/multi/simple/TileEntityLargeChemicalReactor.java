@@ -41,7 +41,7 @@ public class TileEntityLargeChemicalReactor extends GARecipeMapMultiblockControl
             MultiblockAbility.EXPORT_FLUIDS, MultiblockAbility.INPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY};
 
     private int speedBonus;
-    
+
     public TileEntityLargeChemicalReactor(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, GARecipeMaps.LARGE_CHEMICAL_RECIPES, false, true, true);
         this.recipeMapWorkable = new LargeChemicalReactorWorkableHandler(this);
