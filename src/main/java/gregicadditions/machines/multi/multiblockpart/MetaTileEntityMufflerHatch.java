@@ -4,6 +4,8 @@ import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
 import codechicken.lib.vec.Matrix4;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
+import gregicadditions.capabilities.impl.GARecipeMapMultiblockController;
+import gregicadditions.client.ClientHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.SlotWidget;
@@ -97,23 +99,24 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
-        // TODO
+        if (shouldRenderOverlay())
+            ClientHandler.MUFFLER_OVERLAY.renderSided(getFrontFacing(), renderState, translation, pipeline);
     }
 
     @Override
     protected ModularUI createUI(EntityPlayer player) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176,
-                18 + 18 + 94 + 9)
-                .label(10, 5, getMetaFullName());
+                18 + 18 + 94 + 18)
+                .label(8, 5, getMetaFullName());
 
         for (int y = 0; y < 2; y++) {
             for (int x = 0; x < 2; x++) {
                 int index = y * 2 + x;
-                builder.widget(new SlotWidget(inventory, index, 89 - 2 * 9 + x * 18, 18 + y * 18, true, true)
+                builder.widget(new SlotWidget(inventory, index, 89 - 2 * 9 + x * 18, 17 + y * 18, true, false)
                         .setBackgroundTexture(GuiTextures.SLOT));
             }
         }
-        builder.bindPlayerInventory(player.inventory, GuiTextures.SLOT, 8, 18 + 18 * 2 + 12);
+        builder.bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7, 18 + 18 * 2 + 12);
         return builder.build(getHolder(), player);
     }
 
