@@ -41,6 +41,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         super(metaTileEntityId, recipeMap);
         this.hasMuffler = hasMuffler;
         this.hasMaintenance = hasMaintenance;
+        this.maintenance_problems = 0b000000;
     }
 
     /**
@@ -48,7 +49,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * A value of 0 means the problem is not fixed, else it is fixed
      * Value positions correspond to the following from left to right: 0=Wrench, 1=Screwdriver, 2=Soft Hammer, 3=Hard Hammer, 4=Wire Cutter, 5=Crowbar
      */
-    protected byte maintenance_problems = 0b000000;
+    protected byte maintenance_problems;
 
     /**
      * Sets the maintenance problem corresponding to index to fixed
@@ -79,7 +80,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * @return the amount of maintenance problems the multiblock has
      */
     public int getNumProblems() {
-        return Integer.bitCount(maintenance_problems);
+        return 6 - Integer.bitCount(maintenance_problems);
     }
 
     /**
