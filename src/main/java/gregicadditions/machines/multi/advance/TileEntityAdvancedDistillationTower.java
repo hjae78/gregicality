@@ -47,7 +47,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static gregicadditions.client.ClientHandler.BABBIT_ALLOY_CASING;
+import static gregicadditions.client.ClientHandler.BABBITT_ALLOY_CASING;
 import static gregicadditions.item.GAMetaBlocks.METAL_CASING_1;
 import static gregtech.api.multiblock.BlockPattern.RelativeDirection.*;
 
@@ -198,7 +198,7 @@ public class TileEntityAdvancedDistillationTower extends MetaTileEntityDistillat
         };
     }
 
-    private static final IBlockState defaultCasingState = METAL_CASING_1.getState(MetalCasing1.CasingType.BABBIT_ALLOY);
+    private static final IBlockState defaultCasingState = METAL_CASING_1.getState(MetalCasing1.CasingType.BABBITT_ALLOY);
     public static final IBlockState casingState = MultiUtils.getConfigCasing(GAConfig.multis.distillationTower.casingMaterial, defaultCasingState);
 
 
@@ -208,7 +208,7 @@ public class TileEntityAdvancedDistillationTower extends MetaTileEntityDistillat
 
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart sourcePart) {
-        return MultiUtils.getConfigCasingTexture(GAConfig.multis.distillationTower.casingMaterial, BABBIT_ALLOY_CASING);
+        return MultiUtils.getConfigCasingTexture(GAConfig.multis.distillationTower.casingMaterial, BABBITT_ALLOY_CASING);
     }
 
     @Override

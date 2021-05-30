@@ -700,7 +700,7 @@ public class GAConfig {
             @Config.Comment("The casing material to use for the Advanced Distllation Tower.")
             @Config.Name("Advanced Distillation Tower Casing Material")
             @Config.RequiresMcRestart
-            public String casingMaterial = "babbit_alloy";
+            public String casingMaterial = "babbitt_alloy";
         }
 
         public static class LargeAssembler {

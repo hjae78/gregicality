@@ -4,7 +4,6 @@ import codechicken.lib.raytracer.CuboidRayTraceResult;
 import gregicadditions.GAConfig;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.capabilities.IMultiRecipe;
-import gregicadditions.item.GAMetaBlocks;
 import gregicadditions.item.components.ConveyorCasing;
 import gregicadditions.item.components.RobotArmCasing;
 import gregicadditions.item.metal.MetalCasing1;
@@ -21,9 +20,7 @@ import gregtech.api.recipes.RecipeMaps;
 import gregtech.api.render.ICubeRenderer;
 import gregtech.api.render.OrientedOverlayRenderer;
 import gregtech.api.render.Textures;
-import gregtech.api.unification.material.type.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,10 +42,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static gregicadditions.client.ClientHandler.BABBIT_ALLOY_CASING;
 import static gregicadditions.client.ClientHandler.HG_1223_CASING;
 import static gregicadditions.item.GAMetaBlocks.METAL_CASING_1;
-import static gregtech.api.unification.material.Materials.Titanium;
 
 public class TileEntityLargePackager extends LargeSimpleRecipeMapMultiblockController implements IMultiRecipe {
 

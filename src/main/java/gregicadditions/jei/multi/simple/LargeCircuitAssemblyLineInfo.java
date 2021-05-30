@@ -55,4 +55,9 @@ public class LargeCircuitAssemblyLineInfo extends MultiblockInfoPage {
         return new String[]{I18n.format("gregtech.multiblock.large_circuit_assembly.description")};
     }
 
+    @Override
+    public float getDefaultZoom() {
+        return 0.9f;
+    }
+
 }

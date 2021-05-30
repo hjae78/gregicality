@@ -157,12 +157,10 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
             }
             case 1: { // Consume Duct Tape for auto taping repair, then fix everything
                 if(!consumeDuctTape(this.inventory, 0)) //todo make this do something (redstone?) if it fails or is out of tape
+                    fixEverything();
                     break;
             }
-            case 2: { // Fix everything for full auto repair
-                fixEverything();
-                break;
-            }
+            // Fully automatic hatch never lets maintenance change elsewhere
         }
     }
 
@@ -249,6 +247,13 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     private void fixEverything() {
         if (this.getController() instanceof GARecipeMapMultiblockController)
             for (int i = 0; i < 6; i++) ((GARecipeMapMultiblockController) this.getController()).setMaintenanceFixed(i);
+    }
+
+    /**
+     * @return maintenance hatch type, bounded [0, 3)
+     */
+    public int getType() {
+        return this.type;
     }
 
     @Override

@@ -47,4 +47,9 @@ public class LargeNaquadahReactorInfo extends MultiblockInfoPage {
     public String[] getDescription() {
         return new String[]{};
     }
+
+    @Override
+    public float getDefaultZoom() {
+        return 0.6f;
+    }
 }

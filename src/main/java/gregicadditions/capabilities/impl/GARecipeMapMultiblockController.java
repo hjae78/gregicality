@@ -3,11 +3,13 @@ package gregicadditions.capabilities.impl;
 import gregicadditions.GAUtility;
 import gregicadditions.GAValues;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
+import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMaintenanceHatch;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
+import gregtech.api.multiblock.PatternMatchContext;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.util.XSTR;
 import net.minecraft.nbt.NBTTagCompound;
@@ -102,10 +104,24 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * @param duration duration in ticks to add to the counter of active time
      */
     public void calculateMaintenance(int duration) {
+        MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY).get(0);
+        if (maintenanceHatch.getType() == 2) {
+            return;
+        }
+
         timeActive += duration;
         if (minimumMaintenanceTime - timeActive <= 0)
             if(XSTR_RAND.nextFloat() - 0.75f >= 0)
                 causeProblems();
+    }
+
+    @Override
+    protected void formStructure(PatternMatchContext context) {
+        super.formStructure(context);
+        MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY).get(0);
+        if (maintenanceHatch.getType() == 2) {
+            this.maintenance_problems = 0b111111;
+        }
     }
 
     @Override
