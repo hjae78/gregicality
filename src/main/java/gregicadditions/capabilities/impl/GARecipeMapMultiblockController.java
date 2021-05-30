@@ -165,7 +165,13 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
             }
 
             // Maintenance Text
-            if (this.hasProblems()) {
+            if (hasMuffler && !isMufflerFaceFree()) {
+                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed")
+                        .setStyle(new Style().setColor(TextFormatting.RED)
+                                .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,
+                                        new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed.tooltip")))));
+
+            } else if (this.hasProblems()) {
                 textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.has_problems")
                         .setStyle(new Style().setColor(TextFormatting.DARK_RED)));
 
@@ -219,10 +225,6 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
             } else {
                 textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.no_problems")
                         .setStyle(new Style().setColor(TextFormatting.GREEN)));
-            }
-            if (hasMuffler && !isMufflerFaceFree()) {
-                textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.muffler_obstructed")
-                        .setStyle(new Style().setColor(TextFormatting.RED)));
             }
         } else {
             ITextComponent tooltip = new TextComponentTranslation("gregtech.multiblock.invalid_structure.tooltip");

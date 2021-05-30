@@ -13,7 +13,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.util.XSTR;
 import gregtech.common.metatileentities.electric.multiblockpart.MetaTileEntityMultiblockPart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -37,25 +36,21 @@ import static gregicadditions.capabilities.impl.GARecipeMapMultiblockController.
 
 public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityMufflerHatch> {
 
-    private final int recoveryAmount;
+    private final int recoveryChance;
     private final ItemStackHandler inventory;
 
     private boolean frontFaceFree;
 
-    public MetaTileEntityMufflerHatch(ResourceLocation metaTileEntityId, int tier, int recoveryAmount) {
+    public MetaTileEntityMufflerHatch(ResourceLocation metaTileEntityId, int tier, int recoveryChance) {
         super(metaTileEntityId, tier);
-        this.recoveryAmount = recoveryAmount;
+        this.recoveryChance = recoveryChance;
         this.inventory = new ItemStackHandler(4);
         this.frontFaceFree = false;
     }
 
-    public ItemStackHandler getRecoveryInventory() {
-        return inventory;
-    }
-
     @Override
     public MetaTileEntity createMetaTileEntity(MetaTileEntityHolder holder) {
-        return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier(), recoveryAmount);
+        return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier(), recoveryChance);
     }
 
     @Override
@@ -64,18 +59,20 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
 
         if (!getWorld().isRemote) {
             if (getOffsetTimer() % 10 == 0)
-                this.frontFaceFree = checkFrontFaceFree(); // todo do more with this
+                this.frontFaceFree = checkFrontFaceFree();
         }
         GARecipeMapMultiblockController controller = (GARecipeMapMultiblockController) getController();
         if (controller != null && controller.isActive())
             pollutionParticles();
     }
 
-    // TODO Rework random chance
     public void recoverItems(List<ItemStack> recoveryItems) {
-        //float random = random.nextInt(10000);
-        //if (random > recoveryAmount)
-        MetaTileEntity.addItemsToItemHandler(inventory, false, recoveryItems);
+        if (calculateChance())
+            MetaTileEntity.addItemsToItemHandler(inventory, false, recoveryItems);
+    }
+
+    private boolean calculateChance() {
+        return recoveryChance >= 100 || recoveryChance >= XSTR_RAND.nextInt(100);
     }
 
     @Override
@@ -123,7 +120,7 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("gtadditions.muffler.recovery_tooltip", recoveryAmount)); // TODO lang key
+        tooltip.add(I18n.format("gtadditions.muffler.recovery_tooltip", recoveryChance));
     }
 
     @Override
