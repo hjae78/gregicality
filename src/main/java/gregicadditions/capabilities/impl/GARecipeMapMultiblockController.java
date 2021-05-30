@@ -9,6 +9,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.util.XSTR;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import gregtech.api.unification.OreDictUnifier;
@@ -32,6 +33,8 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     }};
     private final boolean hasMuffler;
     private final boolean hasMaintenance;
+
+    public static final XSTR XSTR_RAND = new XSTR();
 
     public GARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, recipeMap, false, true);
@@ -231,11 +234,8 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     }
 
     protected void outputRecoveryItems() {
-        List<MetaTileEntityMufflerHatch> mufflers = getAbilities(GregicAdditionsCapabilities.MUFFLER_HATCH);
-        if (mufflers != null && mufflers.get(0) != null) {
-            MetaTileEntityMufflerHatch muffler = mufflers.get(0);
-            muffler.recoverItems(recoveryItems.stream().map(ItemStack::copy).collect(Collectors.toList()));
-        }
+        MetaTileEntityMufflerHatch muffler = getAbilities(GregicAdditionsCapabilities.MUFFLER_HATCH).get(0);
+        muffler.recoverItems(recoveryItems.stream().map(ItemStack::copy).collect(Collectors.toList()));
     }
 
     @Override

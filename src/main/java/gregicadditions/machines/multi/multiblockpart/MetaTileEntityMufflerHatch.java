@@ -33,11 +33,12 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static gregicadditions.capabilities.impl.GARecipeMapMultiblockController.XSTR_RAND;
+
 public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityMufflerHatch> {
 
     private final int recoveryAmount;
     private final ItemStackHandler inventory;
-    private final XSTR random;
 
     private boolean frontFaceFree;
 
@@ -46,7 +47,6 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
         this.recoveryAmount = recoveryAmount;
         this.inventory = new ItemStackHandler(4);
         this.frontFaceFree = false;
-        this.random = new XSTR();
     }
 
     public ItemStackHandler getRecoveryInventory() {
@@ -123,7 +123,7 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
-        tooltip.add(I18n.format("gtadditions.muffler.recovery", recoveryAmount)); // TODO lang key
+        tooltip.add(I18n.format("gtadditions.muffler.recovery_tooltip", recoveryAmount)); // TODO lang key
     }
 
     @Override
@@ -153,22 +153,22 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
     public void pollutionParticles() {
 
         BlockPos pos = this.getPos();
-        EnumFacing aDir = this.getFrontFacing();
-        float xPos = aDir.getXOffset() * 0.76F + pos.getX() + 0.25F;
-        float yPos = aDir.getYOffset() * 0.76F + pos.getY() + 0.25F;
-        float zPos = aDir.getZOffset() * 0.76F + pos.getZ() + 0.25F;
+        EnumFacing facing = this.getFrontFacing();
+        float xPos = facing.getXOffset() * 0.76F + pos.getX() + 0.25F;
+        float yPos = facing.getYOffset() * 0.76F + pos.getY() + 0.25F;
+        float zPos = facing.getZOffset() * 0.76F + pos.getZ() + 0.25F;
 
-        float ySpd = aDir.getYOffset() * 0.1F + 0.2F + 0.1F * random.nextFloat();
+        float ySpd = facing.getYOffset() * 0.1F + 0.2F + 0.1F * XSTR_RAND.nextFloat();
         float xSpd;
         float zSpd;
 
-        if (aDir.getYOffset() == -1) {
-            float temp = random.nextFloat() * 2 * (float) Math.PI;
+        if (facing.getYOffset() == -1) {
+            float temp = XSTR_RAND.nextFloat() * 2 * (float) Math.PI;
             xSpd = (float) Math.sin(temp) * 0.1F;
             zSpd = (float) Math.cos(temp) * 0.1F;
         } else {
-            xSpd = aDir.getXOffset() * (0.1F + 0.2F * random.nextFloat());
-            zSpd = aDir.getZOffset() * (0.1F + 0.2F * random.nextFloat());
+            xSpd = facing.getXOffset() * (0.1F + 0.2F * XSTR_RAND.nextFloat());
+            zSpd = facing.getZOffset() * (0.1F + 0.2F * XSTR_RAND.nextFloat());
         }
 
         getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, xPos, yPos, zPos, xSpd, ySpd, zSpd);
