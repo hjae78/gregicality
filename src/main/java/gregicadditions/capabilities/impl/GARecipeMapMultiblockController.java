@@ -5,6 +5,8 @@ import gregicadditions.GAValues;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.machines.multi.multiblockpart.MetaTileEntityMufflerHatch;
 import gregtech.api.capability.IEnergyContainer;
+import gregtech.api.metatileentity.multiblock.IMultiblockPart;
+import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.recipes.RecipeMap;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,9 +22,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public abstract class GARecipeMapMultiblockController extends RecipeMapMultiblockController {
 
@@ -30,14 +30,16 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Carbon));
     }};
     private final boolean hasMuffler;
+    private final boolean hasMaintenance;
 
     public GARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
-        this(metaTileEntityId, recipeMap, false);
+        this(metaTileEntityId, recipeMap, false, true);
     }
 
-    public GARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, boolean hasMuffler) {
+    public GARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap, boolean hasMuffler, boolean hasMaintenance) {
         super(metaTileEntityId, recipeMap);
         this.hasMuffler = hasMuffler;
+        this.hasMaintenance = hasMaintenance;
     }
 
     /**
@@ -85,6 +87,15 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      */
     public boolean hasProblems() {
         return this.maintenance_problems < 63;
+    }
+
+    @Override
+    protected boolean checkStructureComponents(List<IMultiblockPart> parts, Map<MultiblockAbility<Object>, List<Object>> abilities) {
+        if (hasMuffler && abilities.getOrDefault(GregicAdditionsCapabilities.MUFFLER_HATCH, Collections.emptyList()).size() != 1)
+            return false;
+        if (hasMaintenance && abilities.getOrDefault(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY, Collections.emptyList()).size() != 1)
+            return false;
+        return super.checkStructureComponents(parts, abilities);
     }
 
     @Override
