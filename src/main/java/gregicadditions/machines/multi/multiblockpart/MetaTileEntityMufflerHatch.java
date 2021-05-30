@@ -32,7 +32,6 @@ import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityMufflerHatch> {
 
@@ -59,7 +58,6 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
         return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier(), recoveryAmount);
     }
 
-
     @Override
     public void update() {
         super.update();
@@ -73,12 +71,11 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
             pollutionParticles();
     }
 
-
+    // TODO Rework random chance
     public void recoverItems(List<ItemStack> recoveryItems) {
-        float random = this.random.nextInt(10000);
-        if (random > this.recoveryAmount)
-            IntStream.range(0, Math.min(recoveryItems.size(), inventory.getSlots())).forEach(index ->
-                    this.inventory.insertItem(index, recoveryItems.get(index), false));
+        //float random = random.nextInt(10000);
+        //if (random > recoveryAmount)
+        MetaTileEntity.addItemsToItemHandler(inventory, false, recoveryItems);
     }
 
     @Override

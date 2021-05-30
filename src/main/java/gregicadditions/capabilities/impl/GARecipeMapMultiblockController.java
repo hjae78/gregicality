@@ -23,6 +23,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.event.HoverEvent;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public abstract class GARecipeMapMultiblockController extends RecipeMapMultiblockController {
 
@@ -91,11 +92,21 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
 
     @Override
     protected boolean checkStructureComponents(List<IMultiblockPart> parts, Map<MultiblockAbility<Object>, List<Object>> abilities) {
-        if (hasMuffler && abilities.getOrDefault(GregicAdditionsCapabilities.MUFFLER_HATCH, Collections.emptyList()).size() != 1)
+        boolean canForm = super.checkStructureComponents(parts, abilities);
+        if (!canForm)
             return false;
-        if (hasMaintenance && abilities.getOrDefault(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY, Collections.emptyList()).size() != 1)
-            return false;
-        return super.checkStructureComponents(parts, abilities);
+
+        int mufflerCount = abilities.getOrDefault(GregicAdditionsCapabilities.MUFFLER_HATCH, Collections.emptyList()).size();
+        int maintenanceCount = abilities.getOrDefault(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY, Collections.emptyList()).size();
+
+        if (hasMuffler) {
+            if (mufflerCount != 1)
+                return false;
+        } else {
+            if (mufflerCount != 0)
+                return false;
+        }
+        return hasMaintenance ? maintenanceCount == 1 : maintenanceCount == 0;
     }
 
     @Override
@@ -218,7 +229,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         List<MetaTileEntityMufflerHatch> mufflers = getAbilities(GregicAdditionsCapabilities.MUFFLER_HATCH);
         if (mufflers != null && mufflers.get(0) != null) {
             MetaTileEntityMufflerHatch muffler = mufflers.get(0);
-            muffler.recoverItems(recoveryItems);
+            muffler.recoverItems(recoveryItems.stream().map(ItemStack::copy).collect(Collectors.toList()));
         }
     }
 
@@ -229,5 +240,9 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
 
     public boolean isActive() {
         return isStructureFormed() && recipeMapWorkable.isActive();
+    }
+
+    public boolean hasMuffler() {
+        return hasMuffler;
     }
 }
