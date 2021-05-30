@@ -27,7 +27,7 @@ import java.util.*;
 public abstract class GARecipeMapMultiblockController extends RecipeMapMultiblockController {
 
     private final List<ItemStack> recoveryItems = new ArrayList<ItemStack>() {{
-        add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Carbon));
+        add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Ash));
     }};
     private final boolean hasMuffler;
     private final boolean hasMaintenance;
@@ -214,7 +214,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         }
     }
 
-    protected void addRecoveryItems() {
+    protected void outputRecoveryItems() {
         List<MetaTileEntityMufflerHatch> mufflers = getAbilities(GregicAdditionsCapabilities.MUFFLER_HATCH);
         if (mufflers != null && mufflers.get(0) != null) {
             MetaTileEntityMufflerHatch muffler = mufflers.get(0);
@@ -225,5 +225,9 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     protected void setRecoveryItems(ItemStack... recoveryItems) {
         this.recoveryItems.clear();
         this.recoveryItems.addAll(Arrays.asList(recoveryItems));
+    }
+
+    public boolean isActive() {
+        return isStructureFormed() && recipeMapWorkable.isActive();
     }
 }

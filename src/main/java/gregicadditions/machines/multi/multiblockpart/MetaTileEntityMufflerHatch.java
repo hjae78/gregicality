@@ -13,8 +13,6 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
-import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
-import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.util.XSTR;
 import gregtech.common.metatileentities.electric.multiblockpart.MetaTileEntityMultiblockPart;
 import net.minecraft.block.state.IBlockState;
@@ -24,9 +22,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
@@ -67,6 +68,9 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
             if (getOffsetTimer() % 10 == 0)
                 this.frontFaceFree = checkFrontFaceFree(); // todo do more with this
         }
+        GARecipeMapMultiblockController controller = (GARecipeMapMultiblockController) getController();
+        if (controller != null && controller.isActive())
+            pollutionParticles();
     }
 
 
@@ -147,5 +151,30 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
         BlockPos frontPos = new BlockPos(facing.getDirectionVec());
         IBlockState blockState = getWorld().getBlockState(frontPos);
         return blockState.getBlock().isAir(blockState, getWorld(), frontPos);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void pollutionParticles() {
+
+        BlockPos pos = this.getPos();
+        EnumFacing aDir = this.getFrontFacing();
+        float xPos = aDir.getXOffset() * 0.76F + pos.getX() + 0.25F;
+        float yPos = aDir.getYOffset() * 0.76F + pos.getY() + 0.25F;
+        float zPos = aDir.getZOffset() * 0.76F + pos.getZ() + 0.25F;
+
+        float ySpd = aDir.getYOffset() * 0.1F + 0.2F + 0.1F * random.nextFloat();
+        float xSpd;
+        float zSpd;
+
+        if (aDir.getYOffset() == -1) {
+            float temp = random.nextFloat() * 2 * (float) Math.PI;
+            xSpd = (float) Math.sin(temp) * 0.1F;
+            zSpd = (float) Math.cos(temp) * 0.1F;
+        } else {
+            xSpd = aDir.getXOffset() * (0.1F + 0.2F * random.nextFloat());
+            zSpd = aDir.getZOffset() * (0.1F + 0.2F * random.nextFloat());
+        }
+
+        getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, xPos, yPos, zPos, xSpd, ySpd, zSpd);
     }
 }
