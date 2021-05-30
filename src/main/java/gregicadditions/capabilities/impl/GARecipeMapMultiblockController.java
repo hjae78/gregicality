@@ -272,7 +272,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
 
     @Override
     protected void updateFormedValid() {
-        if (isMufflerFaceFree())
+        if (!hasMuffler || isMufflerFaceFree())
             super.updateFormedValid();
     }
 
