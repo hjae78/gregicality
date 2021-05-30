@@ -413,8 +413,6 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
                     .setStyle(new Style().setColor(TextFormatting.RED)
                             .setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltip))));
         }
-
-        textList.add(new TextComponentTranslation("gtadditions.multiblock.universal.problems", this.maintenance_problems));
     }
 
     @Override
