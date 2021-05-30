@@ -58,8 +58,7 @@ public class MetaTileEntityElectricBlastFurnace extends GARecipeMapMultiblockCon
 	private static final MultiblockAbility<?>[] ALLOWED_ABILITIES = {
 			MultiblockAbility.IMPORT_ITEMS, MultiblockAbility.IMPORT_FLUIDS,
 			MultiblockAbility.EXPORT_ITEMS, MultiblockAbility.EXPORT_FLUIDS,
-			MultiblockAbility.INPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY,
-            GregicAdditionsCapabilities.MUFFLER_HATCH
+			MultiblockAbility.INPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY
 	};
 
 	@Override
@@ -71,13 +70,14 @@ public class MetaTileEntityElectricBlastFurnace extends GARecipeMapMultiblockCon
 	protected BlockPattern createStructurePattern() {
 		return FactoryBlockPattern.start()
 				.aisle("XXX", "CCC", "CCC", "XXX")
-				.aisle("XXX", "C#C", "C#C", "XXX")
+				.aisle("XXX", "C#C", "C#C", "XMX")
 				.aisle("XSX", "CCC", "CCC", "XXX")
-				.setAmountAtLeast('L', 10)
+				.setAmountAtLeast('L', 8)
 				.where('S', selfPredicate())
 				.where('L', statePredicate(getCasingState()))
 				.where('X', statePredicate(getCasingState()).or(abilityPartPredicate(ALLOWED_ABILITIES)))
 				.where('C', heatingCoilPredicate().or(heatingCoilPredicate2()))
+                .where('M', abilityPartPredicate(GregicAdditionsCapabilities.MUFFLER_HATCH))
 				.where('#', isAirPredicate())
 				.build();
 	}
