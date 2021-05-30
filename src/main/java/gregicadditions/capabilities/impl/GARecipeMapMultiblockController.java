@@ -36,6 +36,9 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
 
     public static final XSTR XSTR_RAND = new XSTR();
 
+    private int timeActive;
+    private static final int minimumMaintenanceTime = 5184000; // 72 real-life hours = 5184000 ticks
+
     public GARecipeMapMultiblockController(ResourceLocation metaTileEntityId, RecipeMap<?> recipeMap) {
         this(metaTileEntityId, recipeMap, false, true);
     }
@@ -67,7 +70,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * Used to cause a single random maintenance problem
      */
     protected void causeProblems() {
-        this.maintenance_problems &= ~(1 << ((int) (Math.random()*5)));
+        this.maintenance_problems &= ~(1 << ((int) (XSTR_RAND.nextFloat()*5)));
     }
 
     /**
@@ -92,6 +95,17 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      */
     public boolean hasProblems() {
         return this.maintenance_problems < 63;
+    }
+
+    /**
+     * Used to calculate whether a maintenance problem should happen based on machine time active
+     * @param duration duration in ticks to add to the counter of active time
+     */
+    public void calculateMaintenance(int duration) {
+        timeActive += duration;
+        if (minimumMaintenanceTime - timeActive <= 0)
+            if(XSTR_RAND.nextFloat() - 0.75f >= 0)
+                causeProblems();
     }
 
     @Override
@@ -259,7 +273,9 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         return isStructureFormed() && recipeMapWorkable.isActive();
     }
 
-    public boolean hasMuffler() {
+    public boolean hasMufflerHatch() {
         return hasMuffler;
     }
+
+    public boolean hasMaintenanceHatch() { return hasMaintenance; }
 }

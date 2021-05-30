@@ -7,6 +7,8 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 
 public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
+    private int previousRecipeDuration;
+
     public GAMultiblockRecipeLogic(RecipeMapMultiblockController tileEntity) {
         super(tileEntity);
     }
@@ -15,11 +17,9 @@ public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
     protected int[] calculateOverclock(int EUt, long voltage, int duration) {
         int numMaintenanceProblems = (this.metaTileEntity instanceof GARecipeMapMultiblockController) ?
                 ((GARecipeMapMultiblockController) metaTileEntity).getNumProblems() : 0;
-        System.out.println("numMaintenanceProblems " + numMaintenanceProblems);
 
         double maintenanceDurationMultiplier = 1.0 + (0.1 * numMaintenanceProblems);
         int durationModified = (int) (duration * maintenanceDurationMultiplier);
-        System.out.println("durationModified " + durationModified);
 
         if (!allowOverclocking) {
             return new int[]{EUt, durationModified};
@@ -34,6 +34,7 @@ public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
             int multiplier = EUt <= 8 ? tier : tier - 1;
             int resultEUt = EUt * (1 << multiplier) * (1 << multiplier);
             int resultDuration = durationModified / (1 << multiplier);
+            previousRecipeDuration = resultDuration;
             return new int[]{negativeEU ? -resultEUt : resultEUt, resultDuration};
         } else {
             int resultEUt = EUt;
@@ -43,6 +44,7 @@ public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
                 resultEUt *= 4;
                 resultDuration /= 2.8;
             }
+            previousRecipeDuration = (int) resultDuration;
             return new int[]{negativeEU ? -resultEUt : resultEUt, (int) Math.ceil(resultDuration)};
         }
     }
@@ -53,8 +55,12 @@ public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
         RecipeMapMultiblockController controller = (RecipeMapMultiblockController) getMetaTileEntity();
         if (controller instanceof GARecipeMapMultiblockController) {
             GARecipeMapMultiblockController gaController = (GARecipeMapMultiblockController) controller;
-            if (gaController.hasMuffler()) {
+            if (gaController.hasMufflerHatch()) {
                 gaController.outputRecoveryItems();
+            }
+            if (gaController.hasMaintenanceHatch()) {
+                gaController.calculateMaintenance(previousRecipeDuration);
+                previousRecipeDuration = 0;
             }
         }
     }
@@ -67,4 +73,6 @@ public class GAMultiblockRecipeLogic extends MultiblockRecipeLogic {
 
         super.trySearchNewRecipe();
     }
+
+
 }
