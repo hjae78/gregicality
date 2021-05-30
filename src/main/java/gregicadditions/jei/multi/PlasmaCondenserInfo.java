@@ -47,4 +47,10 @@ public class PlasmaCondenserInfo extends MultiblockInfoPage {
     public String[] getDescription() {
         return new String[0];
     }
+
+
+    @Override
+    public float getDefaultZoom() {
+        return 0.7f;
+    }
 }

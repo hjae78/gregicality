@@ -56,4 +56,10 @@ public class HyperReactor2Info extends MultiblockInfoPage {
     public String[] getDescription() {
         return new String[0];
     }
+
+
+    @Override
+    public float getDefaultZoom() {
+        return 0.4f;
+    }
 }
