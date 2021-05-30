@@ -33,6 +33,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     private final List<ItemStack> recoveryItems = new ArrayList<ItemStack>() {{
         add(OreDictUnifier.get(OrePrefix.dustTiny, Materials.Ash));
     }};
+
     private final boolean hasMuffler;
     private final boolean hasMaintenance;
 

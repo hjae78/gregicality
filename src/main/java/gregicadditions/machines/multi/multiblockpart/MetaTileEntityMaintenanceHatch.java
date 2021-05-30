@@ -3,6 +3,7 @@ package gregicadditions.machines.multi.multiblockpart;
 import codechicken.lib.raytracer.CuboidRayTraceResult;
 import codechicken.lib.render.CCRenderState;
 import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Cuboid6;
 import codechicken.lib.vec.Matrix4;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
 import gregicadditions.capabilities.impl.GARecipeMapMultiblockController;
@@ -19,6 +20,7 @@ import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import gregtech.api.render.ICubeRenderer;
+import gregtech.api.render.OrientedOverlayRenderer;
 import gregtech.api.render.SimpleOverlayRenderer;
 import gregtech.api.render.Textures;
 import gregtech.common.items.MetaItems;
@@ -43,6 +45,7 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
 
     private ItemStackHandler inventory;
     private final byte type; // Type 0 is regular, 1 is auto taping, 2 is full auto
+    private boolean isTaped;
 
     private final List<MetaToolValueItem> wrenches = new ArrayList<MetaToolValueItem>() {{
         add(MetaItems.WRENCH);
@@ -90,6 +93,7 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
         super.renderMetaTileEntity(renderState, translation, pipeline);
+
         if (shouldRenderOverlay()) {
 
             SimpleOverlayRenderer renderer = getTier() == 9 ? ClientHandler.FULLAUTO_MAINTENANCE_OVERLAY : getTier() == 5 ? ClientHandler.AUTO_MAINTENANCE_OVERLAY : ClientHandler.MAINTENANCE_OVERLAY;
@@ -142,9 +146,13 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
                 for (int i = 0; i < entityPlayer.inventory.mainInventory.size(); i++) {
                     if (consumeDuctTape(new ItemStackHandler(entityPlayer.inventory.mainInventory), i)) { //todo duct tape overlay on hatch
                         fixEverything();
+                        isTaped = true;
                         break;
                     }
                 }
+
+                if (isTaped)
+                    break;
 
                 // For each problem the multi has, try to fix with tools
                 byte problems = controller.getProblems();
@@ -219,6 +227,8 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
         if (tools == null)
             return;
 
+        this.isTaped = false;
+
         for (MetaToolValueItem tool : tools) {
             for (ItemStack itemStack : entityPlayer.inventory.mainInventory) {
                 if (itemStack.isItemEqualIgnoreDurability(tool.getStackForm())) {
@@ -257,6 +267,11 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     }
 
     @Override
+    protected boolean canMachineConnectRedstone(EnumFacing side) {
+        return super.canMachineConnectRedstone(side);
+    }
+
+    @Override
     public void update() {
         super.update();
         if (this.type != 0) {
@@ -272,6 +287,7 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         super.writeToNBT(data);
         data.setTag("Inventory", this.inventory.serializeNBT());
+        data.setBoolean("Taped", this.isTaped);
         return data;
     }
 
@@ -279,6 +295,7 @@ public class MetaTileEntityMaintenanceHatch extends MetaTileEntityMultiblockPart
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
         this.inventory.deserializeNBT(data.getCompoundTag("Inventory"));
+        this.isTaped = data.getBoolean("Taped");
     }
 
     @Override
