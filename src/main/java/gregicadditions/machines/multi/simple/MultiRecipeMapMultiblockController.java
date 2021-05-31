@@ -1,6 +1,9 @@
 package gregicadditions.machines.multi.simple;
 
 import codechicken.lib.raytracer.CuboidRayTraceResult;
+import codechicken.lib.render.CCRenderState;
+import codechicken.lib.render.pipeline.IVertexOperation;
+import codechicken.lib.vec.Matrix4;
 import gregicadditions.GAUtility;
 import gregicadditions.capabilities.IMultiRecipe;
 import gregicadditions.utils.GALog;
@@ -10,6 +13,7 @@ import gregtech.api.recipes.CountableIngredient;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.recipes.RecipeBuilder;
 import gregtech.api.recipes.RecipeMap;
+import gregtech.api.render.OrientedOverlayRenderer;
 import gregtech.api.util.InventoryUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,11 +31,14 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static gregicadditions.capabilities.MultiblockDataCodes.IS_TAPED;
+import static gregicadditions.capabilities.MultiblockDataCodes.RECIPE_MAP_INDEX;
+
 
 /**
  * To be used for multiblocks that can swap between multiple different RecipeMaps
  */
-abstract public class MultiRecipeMapMultiblockController extends LargeSimpleRecipeMapMultiblockController implements IMultiRecipe {
+public abstract class MultiRecipeMapMultiblockController extends LargeSimpleRecipeMapMultiblockController implements IMultiRecipe {
 
     private final RecipeMap<?>[] recipeMaps; // array of possible recipes, specific to each multi
     private int recipeMapIndex; // index of the current selected recipe
@@ -57,14 +64,19 @@ abstract public class MultiRecipeMapMultiblockController extends LargeSimpleReci
                 return false;
             }
 
+            int index;
             if (playerIn.isSneaking()) // cycle recipemaps backwards
-                this.recipeMapIndex = (recipeMapIndex - 1 < 0 ? recipeMaps.length - 1 : recipeMapIndex - 1) % recipeMaps.length;
+                index = (recipeMapIndex - 1 < 0 ? recipeMaps.length - 1 : recipeMapIndex - 1) % recipeMaps.length;
             else // cycle recipemaps forwards
-                this.recipeMapIndex = (recipeMapIndex + 1) % recipeMaps.length;
+                index = (recipeMapIndex + 1) % recipeMaps.length;
+
+            setRecipeMapIndex(index);
         }
 
-        return true; // return true here on the server to keep the GUI closed
+        return true; // return true here on the client to keep the GUI closed
     }
+
+    public abstract OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex);
 
     public RecipeMap<?>[] getRecipeMaps() {
         return recipeMaps;
@@ -72,6 +84,14 @@ abstract public class MultiRecipeMapMultiblockController extends LargeSimpleReci
 
     public int getRecipeMapIndex() {
         return recipeMapIndex;
+    }
+
+    public void setRecipeMapIndex(int index) {
+        this.recipeMapIndex = index;
+        if (!getWorld().isRemote) {
+            writeCustomData(RECIPE_MAP_INDEX, buf -> buf.writeInt(index));
+            markDirty();
+        }
     }
 
     @Override
@@ -84,25 +104,40 @@ abstract public class MultiRecipeMapMultiblockController extends LargeSimpleReci
     @Override
     public void readFromNBT(NBTTagCompound data) {
         super.readFromNBT(data);
-        this.recipeMapIndex = data.getInteger("RecipeMapIndex");
+        recipeMapIndex = data.getInteger("RecipeMapIndex");
     }
 
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);
-        buf.writeByte(this.recipeMapIndex);
+        buf.writeByte(recipeMapIndex);
     }
 
     @Override
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
-        this.recipeMapIndex = buf.readByte();
+        recipeMapIndex = buf.readByte();
+    }
+
+    @Override
+    public void receiveCustomData(int dataId, PacketBuffer buf) {
+        super.receiveCustomData(dataId, buf);
+        if (dataId == RECIPE_MAP_INDEX) {
+            recipeMapIndex = buf.readInt();
+            scheduleRenderUpdate();
+        }
     }
 
     @Override
     protected void addDisplayText(List<ITextComponent> textList) {
         super.addDisplayText(textList);
         textList.add(new TextComponentTranslation("gregtech.multiblock.recipe", new TextComponentTranslation("recipemap." + this.recipeMaps[this.recipeMapIndex].getUnlocalizedName() + ".name")));
+    }
+
+    @Override
+    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
+        super.renderMetaTileEntity(renderState, translation, pipeline);
+        getRecipeMapOverlay(recipeMapIndex).render(renderState, translation, pipeline, getFrontFacing(), isActive());
     }
 
     public static class MultiRecipeMapMultiblockRecipeLogic extends LargeSimpleMultiblockRecipeLogic {

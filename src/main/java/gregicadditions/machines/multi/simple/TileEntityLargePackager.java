@@ -51,6 +51,13 @@ public class TileEntityLargePackager extends MultiRecipeMapMultiblockController 
     }
 
     @Override
+    public OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex) {
+        if (recipeMapIndex == 1)
+            return Textures.UNPACKER_OVERLAY;
+        return Textures.PACKER_OVERLAY;
+    }
+
+    @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("XXX", "XXX", "XXX")

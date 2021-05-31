@@ -55,6 +55,20 @@ public class TileEntityLargeMultiUse extends MultiRecipeMapMultiblockController 
     }
 
     @Override
+    public OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex) {
+        switch (recipeMapIndex) {
+            case 1: return Textures.LATHE_OVERLAY;
+            case 2: return Textures.POLARIZER_OVERLAY;
+            case 3: return Textures.FERMENTER_OVERLAY;
+            case 4: return Textures.FLUID_EXTRACTOR_OVERLAY;
+            case 5: return Textures.EXTRACTOR_OVERLAY;
+            case 6: return Textures.AUTOCLAVE_OVERLAY;
+            case 7: return ClientHandler.REPLICATOR_OVERLAY;
+            default: return Textures.COMPRESSOR_OVERLAY;
+        }
+    }
+
+    @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("XXX", "CMP", "XXX")

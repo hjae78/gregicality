@@ -84,6 +84,11 @@ public class TileEntityAdvancedDistillationTower extends MultiRecipeMapMultibloc
     }
 
     @Override
+    public OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex) {
+        return Textures.DISTILLERY_OVERLAY;
+    }
+
+    @Override
     protected BlockPattern createStructurePattern() {
         Predicate<BlockWorldState> fluidExportPredicate = this.countMatch("HatchesAmount", abilityPartPredicate(MultiblockAbility.EXPORT_FLUIDS));
         Predicate<PatternMatchContext> exactlyOneHatch = (context) -> {
@@ -227,11 +232,5 @@ public class TileEntityAdvancedDistillationTower extends MultiRecipeMapMultibloc
             return (T) this;
         }
         return capabilityResult;
-    }
-
-    @Nonnull
-    @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
-        return Textures.DISTILLERY_OVERLAY;
     }
 }

@@ -2,6 +2,7 @@ package gregicadditions.machines.multi.simple;
 
 import gregicadditions.GAConfig;
 import gregicadditions.capabilities.GregicAdditionsCapabilities;
+import gregicadditions.client.ClientHandler;
 import gregicadditions.item.components.MotorCasing;
 import gregicadditions.item.components.PistonCasing;
 import gregicadditions.machines.multi.MultiUtils;
@@ -51,6 +52,15 @@ public class TileEntityLargeBenderAndForming extends MultiRecipeMapMultiblockCon
     @Override
     public MetaTileEntity createMetaTileEntity(MetaTileEntityHolder holder) {
         return new TileEntityLargeBenderAndForming(metaTileEntityId, RecipeMaps.BENDER_RECIPES);
+    }
+
+    @Override
+    public OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex) {
+        switch(recipeMapIndex) {
+            case 1: return Textures.FORMING_PRESS_OVERLAY;
+            case 2: return Textures.WIREMILL_OVERLAY;
+            default: return Textures.BENDER_OVERLAY;
+        }
     }
 
     @Override

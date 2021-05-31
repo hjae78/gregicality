@@ -44,6 +44,13 @@ public class TileEntityLargeWashingPlant extends MultiRecipeMapMultiblockControl
     }
 
     @Override
+    public OrientedOverlayRenderer getRecipeMapOverlay(int recipeMapIndex) {
+        if (recipeMapIndex == 1)
+            return Textures.CHEMICAL_BATH_OVERLAY;
+        return Textures.ORE_WASHER_OVERLAY;
+    }
+
+    @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
                 .aisle("XXXXX", "XXXXX", "XXXXX")
