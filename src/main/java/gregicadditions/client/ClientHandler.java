@@ -124,6 +124,7 @@ public class ClientHandler {
     public static SimpleOverlayRenderer HIGH_ENERGY_IN = new SimpleOverlayRenderer("overlay/machine/transformer/overlay_energy_in");
     public static SimpleOverlayRenderer HIGH_ENERGY_OUT = new SimpleOverlayRenderer("overlay/machine/transformer/overlay_energy_out");
     public static SimpleOverlayRenderer MAINTENANCE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/maintenance/overlay_maintenance");
+    public static SimpleOverlayRenderer MAINTENANCE_OVERLAY_TAPED = new SimpleOverlayRenderer("overlay/machine/maintenance/overlay_maintenance_taped");
     public static SimpleOverlayRenderer AUTO_MAINTENANCE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/maintenance/overlay_auto_maintenance");
     public static SimpleOverlayRenderer FULLAUTO_MAINTENANCE_OVERLAY = new SimpleOverlayRenderer("overlay/machine/maintenance/overlay_fullauto_maintenance");
     public static SimpleOverlayRenderer MUFFLER_OVERLAY = new SimpleOverlayRenderer("overlay/machine/muffler_overlay");
