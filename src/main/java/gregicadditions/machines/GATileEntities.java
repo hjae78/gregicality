@@ -254,6 +254,8 @@ public class GATileEntities {
     public static MetaTileEntityMufflerHatch[] MUFFLER_HATCH = new MetaTileEntityMufflerHatch[4]; // TODO (this is just LV-HV)
 
     public static TileEntitySteamMiner STEAM_MINER;
+    public static TileEntityAdvancedChemicalReactor ADVANCED_CHEMICAL_REACTOR;
+
     public static MetaTileEntityMaintenanceHatch[] MAINTENANCE_HATCH = new MetaTileEntityMaintenanceHatch[3];
 
     public static void init() {
@@ -1180,6 +1182,8 @@ public class GATileEntities {
         id = 4215;
         for (int i = 0; i < MUFFLER_HATCH.length; i++)
             MUFFLER_HATCH[i] = GregTechAPI.registerMetaTileEntity(id + i, new MetaTileEntityMufflerHatch(location("muffler_hatch." + GAValues.VN[i].toLowerCase()), i, i * 6)); // todo recovery amount logic
+
+        ADVANCED_CHEMICAL_REACTOR = GregTechAPI.registerMetaTileEntity(4219, new TileEntityAdvancedChemicalReactor(location("advanced_chemical_reactor")));
     }
 
     public static <T extends MetaTileEntity & ITieredMetaTileEntity> MTE<T> create(int id, T sampleMetaTileEntity) {
