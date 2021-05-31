@@ -77,7 +77,7 @@ public class MetalCasing1 extends VariantBlock<MetalCasing1.CasingType> {
                 case "casing_inconel_625": { return INCONEL_625_CASING; }
                 case "casing_grisium": { return GRISIUM_CASING; }
                 case "casing_eglin_steel": { return EGLIN_STEEL_CASING; }
-                case "casing_babbit_alloy": { return BABBITT_ALLOY_CASING; }
+                case "casing_babbitt_alloy": { return BABBITT_ALLOY_CASING; }
                 case "casing_hg_1223": { return HG_1223_CASING; }
                 case "casing_tumbaga": { return TUMBAGA_CASING; }
                 case "casing_talonite": { return TALONITE_CASING; }
