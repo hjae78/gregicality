@@ -487,6 +487,7 @@ public class GAMetaItem extends MaterialMetaItem {
         KAPTON_CIRCUIT_BOARD = addItem(585, "board_circuit.kapton");
 
         SHAPE_EXTRUDER_SMALL_GEAR = addItem(586, "shape.extruder.gear.small");
+        SHAPE_EXTRUDER_ROTOR = addItem(587, "shape.extruder.rotor");
 
         NEURO_PROCESSOR = addItem(15, "processor.neuro");
         PYROLYTIC_CARBON = addItem(16, "pyrolytic_carbon");
@@ -505,7 +506,6 @@ public class GAMetaItem extends MaterialMetaItem {
         COMPRESSED_COKE_CLAY = addItem(36, "compressed.coke.clay");
         HOT_IRON_INGOT = addItem(37, "hot_iron_ingot");
 
-        MetaItems.COMPRESSED_CLAY.setInvisible();
         MetaItems.DATA_CONTROL_CIRCUIT_IV.setInvisible();
         MetaItems.CRYSTAL_PROCESSOR_IV.setInvisible();
         MetaItems.ADVANCED_CIRCUIT_MV.setInvisible();
