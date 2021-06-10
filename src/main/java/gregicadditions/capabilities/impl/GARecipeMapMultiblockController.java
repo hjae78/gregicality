@@ -32,7 +32,6 @@ import net.minecraft.util.text.event.HoverEvent;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static gregicadditions.capabilities.MultiblockDataCodes.STORE_MAINTENANCE;
 import static gregicadditions.capabilities.MultiblockDataCodes.STORE_TAPED;
 import static gregtech.api.gui.widgets.AdvancedTextWidget.withButton;
 import static gregtech.api.gui.widgets.AdvancedTextWidget.withHoverTextTranslate;
@@ -129,7 +128,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
      * @param duration duration in ticks to add to the counter of active time
      */
     public void calculateMaintenance(int duration) {
-        MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY).get(0);
+        MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
         if (maintenanceHatch.getType() == 2) {
             return;
         }
@@ -146,7 +145,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         if (hasMaintenance) {
-            MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY).get(0);
+            MetaTileEntityMaintenanceHatch maintenanceHatch = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
             if (maintenanceHatch.getType() == 2) {
                 this.maintenance_problems = 0b111111;
             } else {
@@ -170,7 +169,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
     @Override
     public void invalidateStructure() {
         if (hasMaintenance) {
-            MetaTileEntityMaintenanceHatch maintenance = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY).get(0);
+            MetaTileEntityMaintenanceHatch maintenance = getAbilities(GregicAdditionsCapabilities.MAINTENANCE_HATCH).get(0);
             if (maintenance.getType() != 2)
                 maintenance.storeMaintenanceData(maintenance_problems, timeActive);
         }
@@ -184,7 +183,7 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
             return false;
 
         int mufflerCount = abilities.getOrDefault(GregicAdditionsCapabilities.MUFFLER_HATCH, Collections.emptyList()).size();
-        int maintenanceCount = abilities.getOrDefault(GregicAdditionsCapabilities.MAINTENANCE_CAPABILITY, Collections.emptyList()).size();
+        int maintenanceCount = abilities.getOrDefault(GregicAdditionsCapabilities.MAINTENANCE_HATCH, Collections.emptyList()).size();
 
         if (hasMuffler) {
             if (mufflerCount != 1)
@@ -235,78 +234,6 @@ public abstract class GARecipeMapMultiblockController extends RecipeMapMultibloc
         if (dataId == STORE_TAPED) {
             storedTaped = buf.readBoolean();
         }
-    }
-
-    /**
-     * This value stores whether each of the 5 maintenance problems have been fixed.
-     * A value of 0 means the problem is not fixed, else it is fixed
-     * Value positions correspond to the following from left to right: 0=Wrench, 1=Screwdriver, 2=Soft Hammer, 3=Hard Hammer, 4=Wire Cutter, 5=Crowbar
-     */
-    protected byte maintenance_problems = 0b000000;
-
-    /**
-     * Sets the maintenance problem corresponding to index to fixed
-     *
-     * @param index the index of the maintenance problem
-     */
-    public void setMaintenanceFixed(int index) {
-        this.maintenance_problems |= 1 << index;
-    }
-
-    /**
-     * Used to cause a single random maintenance problem
-     */
-    protected void causeProblems() {
-        this.maintenance_problems &= ~(1 << ((int) (Math.random()*5)));
-    }
-
-    /**
-     *
-     * @return the byte value representing the maintenance problems
-     */
-    public byte getProblems() {
-        return maintenance_problems;
-    }
-
-    /**
-     *
-     * @return the amount of maintenance problems the multiblock has
-     */
-    public int getNumProblems() {
-        return Integer.bitCount(maintenance_problems);
-    }
-
-    /**
-     *
-     * @return whether the multiblock has any maintenance problems
-     */
-    public boolean hasProblems() {
-        return this.maintenance_problems < 63;
-    }
-
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound data) {
-        super.writeToNBT(data);
-        data.setByte("Maintenance", maintenance_problems);
-        return data;
-    }
-
-    @Override
-    public void readFromNBT(NBTTagCompound data) {
-        super.readFromNBT(data);
-        maintenance_problems = data.getByte("Maintenance");
-    }
-
-    @Override
-    public void writeInitialSyncData(PacketBuffer buf) {
-        super.writeInitialSyncData(buf);
-        buf.writeByte(maintenance_problems);
-    }
-
-    @Override
-    public void receiveInitialSyncData(PacketBuffer buf) {
-        super.receiveInitialSyncData(buf);
-        this.maintenance_problems = buf.readByte();
     }
 
 
