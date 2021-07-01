@@ -827,6 +827,7 @@ public class RecipeHandler {
     private static void processMetalCasing(OrePrefix prefix, IngotMaterial material) {
 
         if (material.hasFlag(GENERATE_METAL_CASING)) {
+            /* Temporarily disable casing recipes until we remove their flags from Gregicality.
             ItemStack metalCasingStack = OreDictUnifier.get(prefix, material, 3);
             ModHandler.addShapedRecipe(String.format("autogen_metal_casing_%s", material), metalCasingStack,
                     "PhP", "PBP", "PwP",
@@ -839,7 +840,7 @@ public class RecipeHandler {
                     .circuitMeta(0)
                     .outputs(metalCasingStack)
                     .buildAndRegister();
-
+            */
             int voltageMultiplier = material.blastFurnaceTemperature == 0 ? 1 : material.blastFurnaceTemperature > 2000 ? 16 : 4;
 
             ARC_FURNACE_RECIPES.recipeBuilder().EUt(30 * voltageMultiplier).duration(382)
