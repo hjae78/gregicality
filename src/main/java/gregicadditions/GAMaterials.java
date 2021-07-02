@@ -1524,6 +1524,8 @@ public class GAMaterials implements IMaterialHandler {
 
         // Gears
         BlackSteel.addFlag(GENERATE_GEAR);
+        BlueSteel.addFlag(GENERATE_GEAR);
+        Cobalt.addFlag(GENERATE_GEAR);
         RedSteel.addFlag(GENERATE_GEAR);
         Naquadria.addFlag(GENERATE_GEAR);
 
