@@ -46,7 +46,7 @@ import java.util.Map;
 import static gregtech.api.render.Textures.CLEAN_STAINLESS_STEEL_CASING;
 import static gregtech.api.unification.material.Materials.StainlessSteel;
 
-public class MetaTileEntityDrillingRig extends MultiblockWithDisplayBase { //todo maintenance
+public class MetaTileEntityDrillingRig extends MultiblockWithDisplayBase { //todo staged removal
 
     private static final MultiblockAbility<?>[] ALLOWED_ABILITIES = new MultiblockAbility[]{MultiblockAbility.IMPORT_FLUIDS,
             MultiblockAbility.EXPORT_FLUIDS, MultiblockAbility.INPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_HATCH};
@@ -263,6 +263,7 @@ public class MetaTileEntityDrillingRig extends MultiblockWithDisplayBase { //tod
     @Override
     public void addInformation(ItemStack stack, @Nullable World player, List<String> tooltip, boolean advanced) {
         tooltip.add(I18n.format("gtadditions.machine.miner.fluid_usage", GAConfig.Extraction.drillingMud, I18n.format(GAMaterials.DrillingMud.getFluid(0).getUnlocalizedName())));
+        tooltip.add(I18n.format("gtadditions.machine.removal.universal"));
     }
 
     @Override

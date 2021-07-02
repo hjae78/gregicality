@@ -40,7 +40,7 @@ import java.util.function.Predicate;
 import static gregtech.api.render.Textures.SOLID_STEEL_CASING;
 
 
-public class MetaTileEntityChemicalPlant extends GARecipeMapMultiblockController {
+public class MetaTileEntityChemicalPlant extends GARecipeMapMultiblockController { //todo staged removal
 
     public static final List<GAMultiblockCasing.CasingType> CASING1_ALLOWED = Arrays.asList(
             GAMultiblockCasing.CasingType.TIERED_HULL_LV,
@@ -225,6 +225,7 @@ public class MetaTileEntityChemicalPlant extends GARecipeMapMultiblockController
         super.addInformation(stack, player, tooltip, advanced);
         tooltip.add(I18n.format("gregtech.multiblock.universal.framework.tooltip"));
         tooltip.add(I18n.format("gtadditions.multiblock.chemical_plant.tooltip"));
+        tooltip.add(I18n.format("gtadditions.machine.removal.universal"));
     }
 
     @Override

@@ -59,15 +59,21 @@ public class GAConfig {
         @Config.Comment("Change the recipe of rods to result in 1 stick and 2 small piles of dusts.")
         public boolean stickGT5U = false;
 
-        @Config.Comment("Various 2x2 and 3x3 Compression and Uncompression Recipes")
-        @Config.Name("Compression - Generate Compressor Recipes for blocks")
-        public boolean GenerateCompressorRecipes = true;
-        @Config.Name("Compression - Move 3x3 Crafting Recipes for blocks to the Packager (except tiny dusts)")
-        public boolean Remove3x3BlockRecipes = true;
-        @Config.Name("Compression - Move 1 to 9 Crafting Recipes to the Unpackager (except tiny dusts)")
-        public boolean RemoveBlockUncraftingRecipes = true;
-        @Config.Name("Compression - Add 2x2 Crafting Recipes to the Packager")
-        public boolean Packager2x2Recipes = true;
+        @Config.Comment("3x3 Crafting Table Recipe Removals")
+        @Config.Name("Crafting - Remove 3x3 Block Crafting Recipes from Crafting Table")
+        public boolean Remove3x3BlockRecipes = false;
+        @Config.Name("Crafting - Remove 3x3 Nugget Crafting Recipes from Crafting Table")
+        public boolean Remove3x3NuggetRecipes = false;
+        @Config.Name("Crafting - Remove 3x3 Misc Recipes from Crafting Table (all others)")
+        public boolean Remove3x3MiscRecipes = false;
+
+        @Config.Comment("1->9 Crafting Table Recipe Removals")
+        @Config.Name("Crafting - Remove 1->9 Block Uncrafting Recipes from Crafting Table")
+        public boolean Remove1to9BlockRecipes = false;
+        @Config.Name("Crafting - Remove 1->9 Nugget Uncrafting Recipes from Crafting Table")
+        public boolean Remove1to9NuggetRecipes = false;
+        @Config.Name("Crafting - Remove 1-> Misc Recipes from Crafting Table (all others)")
+        public boolean Remove1to9MiscRecipes = false;
 
         @Config.Comment("Set to false to enable Log>Charcoal smelting recipes")
         @Config.Name("All Log to Charcoal smelting recipes will be removed")
@@ -361,11 +367,6 @@ public class GAConfig {
         @Config.Name("Rocket Engine efficiency loss")
         @Config.RequiresMcRestart
         public boolean rocketEfficiency = true;
-
-        @Config.Comment("Whether or not to add diminishing returns for the Large Rocket Engine")
-        @Config.Name("Large Rocket Engine efficiency loss")
-        @Config.RequiresMcRestart
-        public boolean largeRocketEfficiency = true;
 
 
 
@@ -701,11 +702,6 @@ public class GAConfig {
             @Config.Comment("The casing material to use for the Advanced Distllation Tower.")
             @Config.Name("Advanced Distillation Tower Casing Material")
             @Config.RequiresMcRestart
-            public int distillerMultiplier = 12;
-
-            @Config.Comment("The casing material to use for the Advanced Distllation Tower.")
-            @Config.Name("Advanced Distillation Tower Casing Material")
-            @Config.RequiresMcRestart
             public String casingMaterial = "babbitt_alloy";
         }
 
@@ -853,7 +849,7 @@ public class GAConfig {
             @Config.Comment("The casing material to use for the Large Centrifuge.")
             @Config.Name("Large Cutting Machine casing material")
             @Config.RequiresMcRestart
-            public String casingMaterial = "stellite";
+            public String casingMaterial = "maraging_steel_250";
         }
 
         public static class LargeElectrolyzer {
@@ -1556,7 +1552,7 @@ public class GAConfig {
         }
 
         public static class HeatingCoils {
-            @Config.Comment("GregTech CE heating coils to blacklist from working in non-fusion multiblock machines. Example: \"superconductor\", \"fusion_coil\"")
+            @Config.Comment("GregTech CE heating coils to blacklist from working in non-fusion multiblock machines. Adding Superconducting and Fusion Coils is recommended. Example: \"superconductor\", \"fusion_coil\"")
             @Config.Name("GTCE Heating Coil Blacklist")
             @Config.RequiresMcRestart
             public String[] gtceHeatingCoilsBlacklist = new String[]{
@@ -1610,6 +1606,12 @@ public class GAConfig {
             @Config.RangeInt(min = 1)
             public int[] scanRadii = {2, 3, 6, 7};
 
+            @Config.Comment("The ticks for the prospector to scan each chunk.")
+            @Config.RequiresMcRestart
+            @Config.Name("Prospector scan time cost")
+            @Config.RangeInt(min = 1)
+            public int[] scanTicks = {4, 3, 2, 1};
+
             @Config.Comment("The EU capacity of the prospectors.")
             @Config.RequiresMcRestart
             @Config.Name("Prospector energy capacity")
@@ -1622,7 +1624,7 @@ public class GAConfig {
             @Config.RequiresMcRestart
             @Config.Name("Hyper Reactor EU/t generation")
             @Config.RangeInt(min = 1)
-            public int[] euGeneration = {GAValues.V[GAValues.UV], GAValues.V[GAValues.UHV], GAValues.V[GAValues.UEV]};
+            public int[] euGeneration = {GAValues.V[GAValues.UHV], GAValues.V[GAValues.UEV], GAValues.V[GAValues.UIV]};
 
             @Config.Comment("The fuel multiplier when the Reactor is boosted.")
             @Config.RequiresMcRestart

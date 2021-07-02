@@ -56,7 +56,7 @@ public class MetaTileEntityBioReactor extends GARecipeMapMultiblockController {
 
 
     @Override
-    protected BlockPattern createStructurePattern() {
+    protected BlockPattern createStructurePattern() { //TODO: overhaul bioreactor mechanics in an overhaul pr
         return FactoryBlockPattern.start()
                 .aisle("XXXXX", "XGGGX", "XGGGX", "XGGGX", "XXXXX")
                 .aisle("XXXXX", "G###G", "G#s#G", "G###G", "XXXXX")

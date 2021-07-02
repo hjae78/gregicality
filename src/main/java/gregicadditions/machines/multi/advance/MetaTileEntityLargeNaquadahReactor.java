@@ -40,7 +40,7 @@ import static gregicadditions.client.ClientHandler.NAQUADRIA_CASING;
 import static gregicadditions.item.GAMetaBlocks.METAL_CASING_2;
 import static gregtech.api.unification.material.Materials.Naquadria;
 
-public class MetaTileEntityLargeNaquadahReactor extends GAFueledMultiblockController { //todo generator maintenance
+public class MetaTileEntityLargeNaquadahReactor extends GAFueledMultiblockController {
 
     private static final MultiblockAbility<?>[] ALLOWED_ABILITIES = {
             MultiblockAbility.IMPORT_FLUIDS, MultiblockAbility.OUTPUT_ENERGY, GregicAdditionsCapabilities.MAINTENANCE_HATCH
@@ -91,11 +91,11 @@ public class MetaTileEntityLargeNaquadahReactor extends GAFueledMultiblockContro
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("#CCC#", "#CGC#", "#CCC#", "##C##", "##C##", "#CCC#", "#CGC#", "#####")
+                .aisle("#CCC#", "#CGC#", "#CCC#", "##C##", "##C##", "#CCC#", "#CGC#", "#CCC#")
                 .aisle("CCCCC", "CPAPC", "CgAgC", "#PAP#", "#PAP#", "CgAgC", "CPAPC", "#CCC#")
                 .aisle("CCCCC", "GAFAG", "CAFAC", "CAFAC", "CAFAC", "CAFAC", "GAFAG", "#CmC#")
                 .aisle("CCCCC", "CPAPC", "CgAgC", "#PAP#", "#PAP#", "CgAgC", "CPAPC", "#CCC#")
-                .aisle("#CCC#", "#CSC#", "#CCC#", "##C##", "##C##", "#CCC#", "#CGC#", "#####")
+                .aisle("#CCC#", "#CSC#", "#CCC#", "##C##", "##C##", "#CCC#", "#CGC#", "#CCC#")
                 .setAmountAtLeast('L', 45)
                 .where('S', selfPredicate())
                 .where('L', statePredicate(getCasingState()))

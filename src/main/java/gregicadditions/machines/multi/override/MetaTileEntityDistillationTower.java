@@ -65,10 +65,4 @@ public class MetaTileEntityDistillationTower extends GARecipeMapMultiblockContro
     public IBlockState getCasingState() {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STAINLESS_CLEAN);
     }
-
-    @Nonnull
-    @Override
-    protected OrientedOverlayRenderer getFrontOverlay() {
-        return Textures.DISTILLERY_OVERLAY;
-    }
 }

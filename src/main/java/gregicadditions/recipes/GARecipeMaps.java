@@ -157,15 +157,6 @@ public class GARecipeMaps {
             0, 9, 0, 0, 0, 2, 1, 1, new BlastRecipeBuilder())
             .setSlotOverlay(false, false, GuiTextures.DUST_OVERLAY);
 
-
-
-    @ZenProperty
-    public static final LargeRecipeMap LARGE_FORGE_HAMMER_RECIPES = (LargeRecipeMap) new LargeRecipeMap("large_forge_hammer",
-            1, 1, 1, 1, 1, 1, 0, 0, new LargeRecipeBuilder(RecipeMaps.FORGE_HAMMER_RECIPES))
-            .setSlotOverlay(false, false, GuiTextures.HAMMER_OVERLAY)
-            .setProgressBar(GuiTextures.PROGRESS_BAR_HAMMER, ProgressWidget.MoveType.VERTICAL);
-
-
     @ZenProperty
     public static final RecipeMap<NuclearReactorBuilder> NUCLEAR_REACTOR_RECIPES = new RecipeMap<>("nuclear_reactor",
             2, 3, 1, 2, 0, 0, 0, 0, new NuclearReactorBuilder()
@@ -205,7 +196,7 @@ public class GARecipeMaps {
 
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> PLASMA_CONDENSER_RECIPES = new RecipeMap<>("plasma_condenser",
-            1, 2, 1, 2, 1, 2, 1, 2, (new SimpleRecipeBuilder()))
+            1, 2, 0, 2, 1, 2, 1, 2, (new SimpleRecipeBuilder()))
             .setProgressBar(GuiTextures.PROGRESS_BAR_BATH, ProgressWidget.MoveType.HORIZONTAL);
 
 
@@ -231,7 +222,7 @@ public class GARecipeMaps {
     @ZenProperty
     public static final RecipeMap<SimpleRecipeBuilder> ELECTRIC_IMPLOSION_RECIPES = new RecipeMap<>("electric_implosion",
             1, 2, 1, 2, 0, 0, 0, 0, new SimpleRecipeBuilder()
-                .duration(1).EUt(1500000)); // UHV-tier, 1tick processing time
+                .duration(1).EUt(375000)); // UV-tier, 1tick processing time
 
 
 

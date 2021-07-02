@@ -9,10 +9,12 @@ import gregicadditions.client.ClientHandler;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.SlotWidget;
+import gregtech.api.metatileentity.ITieredMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntityHolder;
 import gregtech.api.metatileentity.multiblock.IMultiblockAbilityPart;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
+import gregtech.api.metatileentity.multiblock.MultiblockControllerBase;
 import gregtech.common.metatileentities.electric.multiblockpart.MetaTileEntityMultiblockPart;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
@@ -35,38 +37,61 @@ import java.util.stream.IntStream;
 
 import static gregicadditions.capabilities.impl.GARecipeMapMultiblockController.XSTR_RAND;
 
-public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityMufflerHatch> {
+public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<MetaTileEntityMufflerHatch>, ITieredMetaTileEntity {
 
     private final int recoveryChance;
     private final ItemStackHandler inventory;
 
     private boolean frontFaceFree;
 
-    public MetaTileEntityMufflerHatch(ResourceLocation metaTileEntityId, int tier, int recoveryChance) {
+    public MetaTileEntityMufflerHatch(ResourceLocation metaTileEntityId, int tier) {
         super(metaTileEntityId, tier);
-        this.recoveryChance = recoveryChance;
-        this.inventory = new ItemStackHandler(16);
+        switch (tier) { //todo replace this with a proper function
+            case 2:
+                recoveryChance = 20;
+                break;
+            case 3:
+                recoveryChance = 33;
+                break;
+            case 4:
+                recoveryChance = 44;
+                break;
+            case 5:
+                recoveryChance = 53;
+                break;
+            case 6:
+                recoveryChance = 61;
+                break;
+            case 7:
+                recoveryChance = 68;
+                break;
+            case 8:
+                recoveryChance = 73;
+                break;
+            default:
+                recoveryChance = 5;
+                break;
+        }
+        this.inventory = new ItemStackHandler((int) Math.pow(tier + 1, 2));
         this.frontFaceFree = false;
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(MetaTileEntityHolder holder) {
-        return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier(), recoveryChance);
+        return new MetaTileEntityMufflerHatch(metaTileEntityId, getTier());
     }
 
     @Override
     public void update() {
         super.update();
-        if (getWorld().isRemote) {
-            return;
-        }
-        if (getOffsetTimer() % 10 == 0) {
-            this.frontFaceFree = checkFrontFaceFree();
+
+        if (!getWorld().isRemote) {
+            if (getOffsetTimer() % 10 == 0)
+                this.frontFaceFree = checkFrontFaceFree();
         }
         GARecipeMapMultiblockController controller = (GARecipeMapMultiblockController) getController();
         if (controller != null && controller.isActive())
             pollutionParticles();
-
     }
 
     // Leaving this here for now to show old behavior
@@ -115,20 +140,22 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
     }
 
     @Override
-    protected ModularUI createUI(EntityPlayer player) {
+    protected ModularUI createUI(EntityPlayer entityPlayer) {
+        int rowSize = this.getTier() + 1;
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176,
-                18 + 18 + 94 + 18)
-                .label(8, 5, getMetaFullName());
+                18 + 18 * rowSize + 94)
+                .label(10, 5, this.getMetaFullName());
 
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                int index = y * 4 + x;
-                builder.widget(new SlotWidget(inventory, index, 89 - 2 * 9 + x * 18, 17 + y * 18, true, false)
+        for(int y = 0; y < rowSize; ++y) {
+            for(int x = 0; x < rowSize; ++x) {
+                int index = y * rowSize + x;
+                builder.widget((new SlotWidget(inventory, index, 89 - rowSize * 9 + x * 18, 18 + y * 18, true, false))
                         .setBackgroundTexture(GuiTextures.SLOT));
             }
         }
-        builder.bindPlayerInventory(player.inventory, GuiTextures.SLOT, 7, 18 + 18 * 4 + 12);
-        return builder.build(getHolder(), player);
+
+        builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 18 + 18 * rowSize + 12);
+        return builder.build(this.getHolder(), entityPlayer);
     }
 
     @Override
@@ -180,7 +207,10 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
             xSpd = facing.getXOffset() * (0.1F + 0.2F * XSTR_RAND.nextFloat());
             zSpd = facing.getZOffset() * (0.1F + 0.2F * XSTR_RAND.nextFloat());
         }
-
-        getWorld().spawnParticle(EnumParticleTypes.SMOKE_LARGE, xPos, yPos, zPos, xSpd, ySpd, zSpd);
+        MultiblockControllerBase controllerBase = getController();
+        if (controllerBase instanceof GARecipeMapMultiblockController) {
+            GARecipeMapMultiblockController controller = (GARecipeMapMultiblockController) controllerBase;
+            controller.runMufflerEffect(xPos, yPos, zPos, xSpd, ySpd, zSpd);
+        }
     }
 }

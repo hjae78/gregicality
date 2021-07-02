@@ -336,7 +336,7 @@ metaitem.small_turbine_rotor.name=%s Small Turbine Rotor
 metaitem.medium_turbine_rotor.name=%s Medium Turbine Rotor
 metaitem.large_turbine_rotor.name=%s Large Turbine Rotor
 metaitem.huge_turbine_rotor.name=%s Huge Turbine Rotor
-metaitem.insulating_tape.name=Duct Tape
+metaitem.insulating_tape.name=BrainTech Aerospace Advanced Reinforced Duct Tape FAL-84
 
 metaitem.liquid_fuel_jetpack.name=§eLiquid fuel jetpack
 metaitem.impeller_jetpack.name=§eThruster Jetpack
@@ -712,6 +712,7 @@ metaitem.tbcco_dust.name=TBCCO Dust
 metaitem.borocarbide_dust.name=Borocarbide Dust
 metaitem.actinium_superhydride.name=Actinium Superhydride
 metaitem.strontium_seaborgium_ruthenate.name=Strontium Seaborgium Ruthenate Superconductor Dust
+metaitem.strontium_superconductor_dust.name=Strontium Superconductor Dust
 metaitem.fullerene_superconductor_dust.name=Fullerene Superconductor Dust
 metaitem.tantalum_carbide.name=Tantalum Carbide
 metaitem.hafnium_carbide.name=Hafnium Carbide
@@ -1029,15 +1030,25 @@ metaitem.circuit.computer.optical.tooltip=§b§oUEV Circuit
 metaitem.circuit.mainframe.optical.name=Optical Mainframe
 metaitem.circuit.mainframe.optical.tooltip=§b§oUIV Circuit
 
+#Exotic
+metaitem.circuit.processor.exotic.name=Exotic Processor
+metaitem.circuit.processor.exotic.tooltip=§b§oUHV Circuit
+metaitem.circuit.assembly.exotic.name=Exotic Assembly
+metaitem.circuit.assembly.exotic.tooltip=§b§oUEV Circuit
+metaitem.circuit.computer.exotic.name=Exotic Computer
+metaitem.circuit.computer.exotic.tooltip=§b§oUIV Circuit
+metaitem.circuit.mainframe.exotic.name=Exotic Mainframe
+metaitem.circuit.mainframe.exotic.tooltip=§b§oUMV Circuit
+
 ##cosmic
 metaitem.circuit.processor.cosmic.name=Cosmic Processor
-metaitem.circuit.processor.cosmic.tooltip=§b§oUHV Circuit
+metaitem.circuit.processor.cosmic.tooltip=§b§oUEV Circuit
 metaitem.circuit.assembly.cosmic.name=Cosmic Assembly
-metaitem.circuit.assembly.cosmic.tooltip=§b§oUEV Circuit
+metaitem.circuit.assembly.cosmic.tooltip=§b§oUIV Circuit
 metaitem.circuit.computer.cosmic.name=Cosmic Computer
-metaitem.circuit.computer.cosmic.tooltip=§b§oUIV Circuit
+metaitem.circuit.computer.cosmic.tooltip=§b§oUMV Circuit
 metaitem.circuit.mainframe.cosmic.name=Cosmic Mainframe
-metaitem.circuit.mainframe.cosmic.tooltip=§b§oUMV Circuit
+metaitem.circuit.mainframe.cosmic.tooltip=§b§oUXV Circuit
 
 
 ####################################################################
@@ -1070,7 +1081,7 @@ metaarmor.energy_share.disable=Energy Supply: Gadgets charging disabled
 metaarmor.energy_share.tooltip=Supply mode: %s
 metaarmor.energy_share.tooltip.guide=To change mode shift-right click when holding item
 
-
+gtadditions.machine.removal.universal=§4This machine will be removed in the next update!
 
 gtadditions.universal.tooltip.amperage_in=Amperage IN: §a%d §7
 
@@ -1710,9 +1721,9 @@ gtadditions.machine.qubit_computer.name=Quantum Computer
 gtadditions.machine.stellar_forge.name=Stellar Forge
 gtadditions.machine.void_miner.uhv.name=Void Miner MK II
 gtadditions.machine.void_miner.uev.name=Void Miner MK III
-gtadditions.machine.hyper_reactor.uv.name=Hyper Reactor I
-gtadditions.machine.hyper_reactor.uhv.name=Hyper Reactor II
-gtadditions.machine.hyper_reactor.uev.name=Hyper Reactor III
+gtadditions.machine.hyper_reactor.i.name=Hyper Reactor I
+gtadditions.machine.hyper_reactor.ii.name=Hyper Reactor II
+gtadditions.machine.hyper_reactor.iii.name=Hyper Reactor III
 gtadditions.machine.fusion_reactor.uhv.name=Fusion Reactor Mark 4
 gtadditions.machine.fusion_reactor.uev.name=Fusion Reactor Mark 5
 gtadditions.machine.fusion_casing_3.name=Fusion Casing MK III
@@ -1726,9 +1737,9 @@ gtadditions.machine.hull.uxv.name=UXV Machine Hull
 
 gtadditions.machine.drilling_rig.name=Drilling Rig
 gtadditions.machine.solar_fluid_sampler.name=Solar Fluid Sampler
-gtadditions.machine.drilling_plant_mv.name=Fluid Drilling Plant 1
-gtadditions.machine.drilling_plant_hv.name=Fluid Drilling Plant 2
-gtadditions.machine.drilling_plant_ev.name=Fluid Drilling Plant 3
+gtadditions.machine.fluid_drilling_plant_mv.name=Fluid Drilling Plant 1
+gtadditions.machine.fluid_drilling_plant_hv.name=Fluid Drilling Plant 2
+gtadditions.machine.fluid_drilling_plant_ev.name=Fluid Drilling Plant 3
 
 gtadditions.machine.cosmic_ray_detector.name=Cosmic Ray Detector
 
@@ -1736,7 +1747,7 @@ gtadditions.machine.cosmic_ray_detector.name=Cosmic Ray Detector
 
 gtadditions.machine.coke_item_bus.name=[Deprecated] Coke Oven Chute
 gtadditions.machine.coke_fluid_hatch.name=[Deprecated] Coke Oven Faucet
-gtadditions.machine.solar_fluid_sampler.missing_solar=Requires LV Solar Pannel On Top!
+gtadditions.machine.solar_fluid_sampler.missing_solar=Requires an LV Solar Panel on top.
 
 gtadditions.machine.maintenance_hatch.name=Maintenance Hatch
 gtadditions.machine.auto_maintenance_hatch.name=Auto-Taping Maintenance Hatch
@@ -1744,7 +1755,12 @@ gtadditions.machine.fullauto_maintenance_hatch.name=Full-Auto Maintenance Hatch
 gtadditions.machine.muffler_hatch.lv.name=LV Muffler Hatch
 gtadditions.machine.muffler_hatch.mv.name=MV Muffler Hatch
 gtadditions.machine.muffler_hatch.hv.name=HV Muffler Hatch
-gtadditions.muffler.recovery_tooltip=Recovers Items §b%d%%§r of the time!
+gtadditions.machine.muffler_hatch.ev.name=EV Muffler Hatch
+gtadditions.machine.muffler_hatch.iv.name=IV Muffler Hatch
+gtadditions.machine.muffler_hatch.luv.name=LuV Muffler Hatch
+gtadditions.machine.muffler_hatch.zpm.name=ZPM Muffler Hatch
+gtadditions.machine.muffler_hatch.uv.name=UV Muffler Hatch
+gtadditions.muffler.recovery_tooltip=Recovers Items §b%d%%§7 of the time!
 
 
 tile.ga_multiblock_casing.coke_oven_bricks.name=Coke Oven Bricks
@@ -1973,7 +1989,7 @@ tile.ga_metal_casing_1.casing_inconel_625.name=High-Stress Inconel 625 Casing
 tile.ga_metal_casing_1.casing_grisium.name=Watertight Grisium Casing
 tile.ga_metal_casing_1.casing_eglin_steel.name=High-Impact Eglin Steel Casing
 tile.ga_metal_casing_1.casing_babbitt_alloy.name=Gall Resistant Babbitt Alloy Casing
-tile.ga_metal_casing_1.casing_hg_1223.name=Toxic Hg-1223 Casing
+tile.ga_metal_casing_1.casing_hg_1223.name=Toxic HG-1223 Casing
 tile.ga_metal_casing_1.casing_tumbaga.name=Malleable Tumbaga Casing
 tile.ga_metal_casing_1.casing_talonite.name=Low Friction Talonite Casing
 tile.ga_metal_casing_1.casing_zirconium_carbide.name=Ultra Heat Tolerant Zirconium Carbide Casing
@@ -2700,6 +2716,15 @@ material.cosmic_neutronium=Cosmic Neutronium
 material.naquadriatic_taranium=Naquadriatic Taranium
 material.fluorinated_ethylene_propylene=Fluorinated Ethylene Propylene (FEP)
 material.polyimide=4,4'-Oxydianiline-Pyromellitimide
+material.barytocalcite=Barytocalcite
+material.witherite=Witherite
+material.arsenopyrite=Arsenopyrite
+material.gallite=Gallite
+material.bowieite=Bowieite
+material.celestine=Celestine
+material.californiumtrioxide=Californium Trioxide
+material.californiumtrichloride=Californium Trichloride
+material.iridiumtrioxide=Iridium Trioxide
 
 gregtech.fluid.hot=Hot %s
 gregtech.fluid.hexachloride=%s Hexachloride
@@ -2844,7 +2869,7 @@ gtadditions.multiblock.reactor.tooltip.2=Coolant is a fluid and can be Steam (15
 gtadditions.multiblock.reactor.tooltip.3=The Nuclear Reactor will drain all coolant stored in hatches scaling with recipe temperature.
 gtadditions.multiblock.reactor.tooltip.4=If there is not enough coolant, the reactor will stop running.
 gtadditions.multiblock.reactor.tooltip.5=If there is too much coolant, the reactor will overclock the recipe.
-gtadditions.multiblock.reactor.tooltip.6=The core of the reactor's material will add more Temperature. Th=0, U=2, Pu=10, Am=15, Cm=25, Bk=35, Cf=50, Es=75, Fm=100, Md=200
+gtadditions.multiblock.reactor.tooltip.6=The core of the reactor's material will add more Temperature. Th=0, Pa=1, U=2, Np=7, Pu=10, Am=15, Cm=25, Bk=35, Cf=50, Es=75, Fm=100, Md=200
 gtadditions.multiblock.reactor.tooltip.7=Tip: A pump cover is a must have in order to regulate coolant, otherwise the reactor will burn fuel too quickly.
 gtadditions.multiblock.reactor.tooltip.8=Tip: Coolant is in a closed loop, so you do not need to keep adding more.
 gtadditions.multiblock.reactor.description=Hatches and buses can be placed on the first or last layer of casings.
@@ -2959,6 +2984,7 @@ gregtech.multiblock.universal.cryotheum_amount=Cryotheum: %dmb
 gregtech.multiblock.universal.liquid_hydrogen_amount=Liquid Hydrogen: %dmB
 gregtech.multiblock.universal.air_amount=Air: %dmB
 gregtech.multiblock.universal.energy_usage=Current Energy Usage: %d%%
+gregtech.multiblock.universal.speed_increase=Current Speed Increase: %d%%
 
 gregtech.multiblock.large_rocket_engine.hydrogen_need=Hydrogen to Boost: %dmB
 gregtech.multiblock.large_rocket_engine.boost=Boosted!
@@ -3018,6 +3044,8 @@ gtadditions.multiblock.mega_logic.tooltip.3=Duration Multiplier: §e%d
 
 gtadditions.multiblock.mega_blast_logic.tooltip.1=EU/t Usage: §eParallel Amount * Recipe EU/t
 gtadditions.multiblock.mega_blast_logic.tooltip.2=Prioritizes Parallel Recipes over Heating Coil Bonuses.
+
+gtadditions.multiblock.advanced_chemical_reactor.tooltip.1=Does not run in parallel when running chemical plant recipes.
 
 item.material.oreprefix.plateCurved=Curved %s Plate
 item.material.oreprefix.ingotDouble=Double %s Ingot
@@ -4127,6 +4155,85 @@ fluid.oxydianiline=Oxydianiline
 fluid.polyamic_acid=Poly(amic acid)
 fluid.hexafluoropropylene=Hexafluoropropylene
 
+fluid.dimethylether=Dimethylether
+fluid.dimethoxyethane=Dimethoxyethane
+fluid.lithiumcyclopentadienide=Lithium Cyclopentadienide
+fluid.californiumcyclopentadienide=Californium Cyclopentadienide
+fluid.soap=Soap
+fluid.deglyceratedsoap=Deglycerated Soap
+fluid.stearicacid=Stearic Acid
+fluid.trioctylphosphine=Tricotylphosphine
+fluid.quantumdots=Quantum Dots
+fluid.iridiumtrichloridesolution=Iridium Trichloride Solution
+fluid.semisolidhydrogen=Semi-Solid Hydrogen
+fluid.microcrystallizinghydrogen=Microcrystallizing Hydrogen
+
+fluid.kanthal_molten=Molten Kanthal
+fluid.nichrome_molten=Molten Nichrome
+fluid.niobium_nitride_molten=Molten Niobium Nitride
+fluid.niobium_titanium_molten=Molten Niobium-Titanium
+fluid.ultimet_molten=Molten Ultimet
+fluid.vanadium_gallium_molten=Molten Vanadium-Gallium
+fluid.yttrium_barium_cuprate_molten=Molten Yttrium Barium Cuprate
+fluid.osmiridium_molten=Molten Osmiridium
+fluid.black_bronze_molten=Molten Black Bronze
+fluid.tungsten_steel_molten=Molten Tungstensteel
+fluid.tungsten_carbide_molten=Molten Tungstencarbide
+fluid.hssg_molten=Molten HSS-G
+fluid.hsse_molten=Molten HSS-E
+fluid.hsss_molten=Molten HSS-S
+fluid.naquadah_alloy_molten=Molten Naquadah Alloy
+fluid.periodicium_molten=Molten Periodicium
+fluid.superheavy_l_alloy_molten=Molten Superheavy-L Alloy
+fluid.superheavy_h_alloy_molten=Molten Superheavy-H Alloy
+fluid.lithium_niobate_molten=Molten Lithium Niobate
+fluid.germanium_tungsten_nitride_molten=Molten Germanium Tungsten Nitride
+fluid.tantalum_hafnium_seaborgium_carbide_molten=Molten Tantalum Hafnium Seaborgium Carbide
+fluid.lithium_titanate_molten=Molten Lithium Titanate
+fluid.trinium_titanium_molten=Molten Trinium Titanium
+fluid.proto_adamantium_molten=Molten Proto Adamantium
+fluid.hdcs_molten=Molten High Durability Compound Steel
+fluid.cinobite_molten=Molten Cinobite
+fluid.uxv_superconductor_base_molten=Molten UXV Superconductor Base
+fluid.umv_superconductor_base_molten=Molten UMV Superconductor Base
+fluid.uiv_superconductor_base_molten=Molten UIV Superconductor Base
+fluid.uev_superconductor_base_molten=Molten UEV Superconductor Base
+fluid.uhv_superconductor_base_molten=Molten UHV Superconductor Base
+fluid.uv_superconductor_base_molten=Molten UV Superconductor Base
+fluid.zpm_superconductor_base_molten=Molten ZPM Superconductor Base
+fluid.luv_superconductor_base_molten=Molten LuV Superconductor Base
+fluid.iv_superconductor_base_molten=Molten IV Superconductor Base
+fluid.ev_superconductor_base_molten=Molten EV Superconductor Base
+fluid.hv_superconductor_base_molten=Molten HV Superconductor Base
+fluid.hastelloy_k243_molten=Molten Hastelloy K243
+fluid.hastelloy_x78_molten=Molten Hastelloy X78
+fluid.enriched_naquadah_alloy_molten=Molten Enriched Naquadah Alloy
+fluid.incoloy813_molten=Molten Incoloy 813
+fluid.abyssal_alloy_molten=Molten Abyssal Alloy
+fluid.naquadriatic_taranium_molten=Molten Naquadriatic Taranium
+fluid.zeron_molten=Molten Zeron
+fluid.lafium_molten=Molten Lafium
+fluid.pikyonium_molten=Molten Pikyonium
+fluid.inconel_b_molten=Molten Inconel 792
+fluid.titan_steel_molten=Molten Titan Steel
+fluid.tungsten_titanium_carbide_molten=Molten Tungsten Titanium Carbide
+fluid.black_titanium_molten=Molten Black Titanium
+fluid.quantum_molten=Molten Quantum
+fluid.ruridit_molten=Molten Ruridit
+fluid.rhodium_plated_palladium_molten=Molten Rhodium Plated Palladium
+fluid.incoloy_ma_molten=Molten Incoloy MA-956
+fluid.hg_alloy_molten=Molten HG-1223
+fluid.nitinol_a_molten=Molten Nitinol 60
+fluid.enderium_molten=Molten Enderium
+fluid.talonite_molten=Molten Talonite
+fluid.stellite_molten=Molten Stellite
+fluid.hastelloy_n_molten=Molten Hastelloy N
+fluid.staballoy_molten=Molten Staballoy
+fluid.maraging_steel_a_molten=Molten Maraging Steel 250
+fluid.inconel_a_molten=Molten Inconel 625
+fluid.grisium_molten=Molten Grisium
+
+
 gtadditions.machine.buffer.lv.name=Basic Buffer
 gtadditions.machine.buffer.mv.name=Advanced Buffer
 gtadditions.machine.buffer.hv.name=Advanced Buffer II
@@ -4287,13 +4394,13 @@ metaitem.smd.diode.supracausal.name=Supra-Causal SMD Diode
 metaitem.smd.transistor.supracausal.name=Supra-Causal SMD Transistor
 
 metaitem.circuit.processor.supracausal.name=Supra-Causal Processor
-metaitem.circuit.processor.supracausal.tooltip=§b§oUEV Circuit
+metaitem.circuit.processor.supracausal.tooltip=§b§oUIV Circuit
 metaitem.circuit.assembly.supracausal.name=Supra-Causal Assembly
-metaitem.circuit.assembly.supracausal.tooltip=§b§oUIV Circuit
+metaitem.circuit.assembly.supracausal.tooltip=§b§oUMV Circuit
 metaitem.circuit.computer.supracausal.name=Supra-Causal Computer
-metaitem.circuit.computer.supracausal.tooltip=§b§oUMV Circuit
+metaitem.circuit.computer.supracausal.tooltip=§b§oUXV Circuit
 metaitem.circuit.mainframe.supracausal.name=Supra-Causal Mainframe
-metaitem.circuit.mainframe.supracausal.tooltip=§b§oUXV Circuit
+metaitem.circuit.mainframe.supracausal.tooltip=§b§oMAX Circuit
 
 metaitem.topological.manipulator.unit.name=Topological Manipulator Unit
 metaitem.relativistic.spinorial.memory.system.name=Relativistic Spinorial Memory
@@ -4311,6 +4418,24 @@ metaitem.insulation_wire_assembly.name=Insulation Wire Assembly
 
 metaitem.coloured.leds.name=Coloured LEDs
 metaitem.display.name=Display
+
+metaitem.fullerene.polymer.matrix.soft.tubing.name=Fullerene Polymer Matrix Soft Tubing
+metaitem.fullerene.polymer.matrix.fine.tubing.name=Fullerene Polymer Matrix Fine Tubing
+metaitem.xray.waveguide.name=X-Ray Waveguide
+metaitem.microfocus.xray.tube.name=Microfocus X-Ray Tube
+metaitem.xray.mirror.plate.name=X-Ray Mirror Plate
+metaitem.untreated.exotic.wafer.name=Untreated Exotic Wafer
+metaitem.exotic.wafer.name=Exotic Wafer
+metaitem.exotic.chip.name=Exotic Chip
+metaitem.excitation.maintainer.name=Excitation Maintainer
+metaitem.cryogenic.interface.name=Cryogenic Interface
+metaitem.rydberg.spinorial.assembly.name=Rydberg Spinorial Assembly
+metaitem.xray.laser.name=X-Ray Laser
+metaitem.exotic.processing.core.name=Exotic Processing Core
+metaitem.smd.capacitor.exotic.name=Exotic SMD Capacitor
+metaitem.smd.resistor.exotic.name=Exotic SMD Resistor
+metaitem.smd.transistor.exotic.name=Exotic SMD Transistor
+metaitem.smd.diode.exotic.name=Exotic SMD Diode
 
 material.qcd_confined_matter=Quantumchromodynamically Confined Matter
 
@@ -4358,9 +4483,22 @@ gtadditions.machine.pa.display2=Parallel Recipes: §b%d
 
 gtadditions.machine.electric_implosion.name=Electric Implosion Compressor
 recipemap.electric_implosion.name=Electric Implosion Compressor
-gtadditions.multiblock.electric_implosion.description=An Implosion Compressor without explosives. Requires UHV-tier power to run, but completes crafts nearly instantly.
+gtadditions.multiblock.electric_implosion.description=An Implosion Compressor without explosives. Requires UV-tier power to run, but completes crafts nearly instantly.
 
 metaitem.shape.extruder.gear.small.name=Extruder Shape (Small Gear)
 metaitem.shape.extruder.gear.small.tooltip=Extruder Shape for making Small Gears
 metaitem.shape.extruder.rotor.name=Extruder Shape (Rotor)
 metaitem.shape.extruder.rotor.tooltip=Extruder Shape for making Rotors
+
+gtadditions.multiblock.large_chemical_reactor.tooltip.1=This multiblock perfectly overclocks, meaning that for each tier, the energy usage per recipe remains the same.
+gtadditions.multiblock.large_chemical_reactor.tooltip.2=The coil also reduces the EU/t for each recipe by a certain amount, depending on the tier.
+gtadditions.multiblock.large_chemical_reactor.tooltip.3=Coils above §e2700K§7 provide a §c5%%§7 reduction in EU/t.
+gtadditions.multiblock.large_chemical_reactor.tooltip.4=Coils above §e3600K§7 provide a §c10%%§7 reduction in EU/t.
+gtadditions.multiblock.large_chemical_reactor.tooltip.5=Coils above §e5400K§7 provide a §c20%%§7 reduction in EU/t.
+
+gtadditions.multiblock.pyrolyse_oven.tooltip.1=For every tier higher of coil used, this multiblock will process one more recipe at a time.
+gtadditions.multiblock.pyrolyse_oven.tooltip.2=The coil's energy discount also applies to this multiblock as well.
+
+gtadditions.multiblock.electric_blast_furnace.tooltip.1=For every 900K that the coils can handle above a recipe's temperature, a small EU/t discount is applied.
+gtadditions.multiblock.electric_blast_furnace.tooltip.2=For every 1800K above the recipe's temperature, the EU/t may be increased by 4x, while the duration may be decreased by 4x, if there is enough power.
+

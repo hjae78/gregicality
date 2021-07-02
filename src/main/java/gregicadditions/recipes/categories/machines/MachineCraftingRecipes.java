@@ -6,6 +6,7 @@ import gregicadditions.item.*;
 import gregicadditions.machines.GATileEntities;
 import gregicadditions.machines.energyconverter.utils.EnergyConverterCraftingHelper;
 import gregicadditions.machines.energyconverter.utils.EnergyConverterType;
+import gregicadditions.recipes.GARecipeMaps;
 import gregtech.api.GTValues;
 import gregtech.api.block.machines.BlockMachine;
 import gregtech.api.recipes.ModHandler;
@@ -37,7 +38,7 @@ import static gregtech.api.GTValues.ULV;
 import static gregtech.api.GTValues.UV;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.recipes.ingredients.IntCircuitIngredient.getIntegratedCircuit;
-import static gregtech.api.unification.material.MarkerMaterials.Tier.Superconductor;
+import static gregtech.api.unification.material.MarkerMaterials.Tier.*;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 
@@ -155,21 +156,33 @@ public class MachineCraftingRecipes {
         OrePrefix plateOrCurved = GAConfig.GT6.addCurvedPlates ? plateCurved : plate;
         // Drums
         ModHandler.addShapedRecipe("wooden_barrel", GATileEntities.WOODEN_DRUM.getStackForm(), "rSs", "PRP", "PRP", 'S', Items.SLIME_BALL, 'P', "plankWood", 'R', new UnificationEntry(stickLong, Iron));
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).inputs(new ItemStack(Blocks.PLANKS, 4, GTValues.W)).inputs(new ItemStack(Items.SLIME_BALL)).input(stickLong, Iron, 2).outputs(GATileEntities.WOODEN_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
 
         ModHandler.addShapedRecipe("bronze_drum",          GATileEntities.BRONZE_DRUM.getStackForm(),          " h ", "PRP", "PRP", 'P', new UnificationEntry(plateOrCurved, Bronze),         'R', new UnificationEntry(stickLong, Bronze));
         ModHandler.addShapedRecipe("steel_drum",           GATileEntities.STEEL_DRUM.getStackForm(),           " h ", "PRP", "PRP", 'P', new UnificationEntry(plateOrCurved, Steel),          'R', new UnificationEntry(stickLong, Steel));
         ModHandler.addShapedRecipe("stainless_steel_drum", GATileEntities.STAINLESS_STEEL_DRUM.getStackForm(), " h ", "PRP", "PRP", 'P', new UnificationEntry(plateOrCurved, StainlessSteel), 'R', new UnificationEntry(stickLong, StainlessSteel));
         ModHandler.addShapedRecipe("titanium_drum",        GATileEntities.TITANIUM_DRUM.getStackForm(),        " h ", "PRP", "PRP", 'P', new UnificationEntry(plateOrCurved, Titanium),       'R', new UnificationEntry(stickLong, Titanium));
         ModHandler.addShapedRecipe("tungstensteel_drum",   GATileEntities.TUNGSTENSTEEL_DRUM.getStackForm(),   " h ", "PRP", "PRP", 'P', new UnificationEntry(plateOrCurved, TungstenSteel),  'R', new UnificationEntry(stickLong, TungstenSteel));
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Bronze, 4).input(stickLong, Bronze, 2).outputs(GATileEntities.BRONZE_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Steel, 4).input(stickLong, Steel, 2).outputs(GATileEntities.STEEL_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, StainlessSteel, 4).input(stickLong, StainlessSteel, 2).outputs(GATileEntities.STAINLESS_STEEL_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Titanium, 4).input(stickLong, Titanium, 2).outputs(GATileEntities.TITANIUM_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, TungstenSteel, 4).input(stickLong, TungstenSteel, 2).outputs(GATileEntities.TUNGSTENSTEEL_DRUM.getStackForm()).circuitMeta(1).buildAndRegister();
 
         // Crates
         ModHandler.addShapedRecipe("wooden_crate", GATileEntities.WOODEN_CRATE.getStackForm(), "RPR", "PsP", "RPR", 'P', "plankWood", 'R', new UnificationEntry(screw, Iron));
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).inputs(new ItemStack(Blocks.PLANKS, 4, GTValues.W)).input(screw, Iron, 4).outputs(GATileEntities.WOODEN_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
 
         ModHandler.addShapedRecipe("bronze_crate",          GATileEntities.BRONZE_CRATE.getStackForm(),          "RPR", "PhP", "RPR", 'P', new UnificationEntry(plateOrCurved, Bronze),         'R', new UnificationEntry(stickLong, Bronze));
         ModHandler.addShapedRecipe("steel_crate",           GATileEntities.STEEL_CRATE.getStackForm(),           "RPR", "PhP", "RPR", 'P', new UnificationEntry(plateOrCurved, Steel),          'R', new UnificationEntry(stickLong, Steel));
         ModHandler.addShapedRecipe("stainless_steel_crate", GATileEntities.STAINLESS_STEEL_CRATE.getStackForm(), "RPR", "PhP", "RPR", 'P', new UnificationEntry(plateOrCurved, StainlessSteel), 'R', new UnificationEntry(stickLong, StainlessSteel));
         ModHandler.addShapedRecipe("titanium_crate",        GATileEntities.TITANIUM_CRATE.getStackForm(),        "RPR", "PhP", "RPR", 'P', new UnificationEntry(plateOrCurved, Titanium),       'R', new UnificationEntry(stickLong, Titanium));
         ModHandler.addShapedRecipe("tungstensteel_crate",   GATileEntities.TUNGSTENSTEEL_CRATE.getStackForm(),   "RPR", "PhP", "RPR", 'P', new UnificationEntry(plateOrCurved, TungstenSteel),  'R', new UnificationEntry(stickLong, TungstenSteel));
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Bronze, 4).input(stickLong, Bronze, 4).outputs(GATileEntities.BRONZE_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Steel, 4).input(stickLong, Steel, 4).outputs(GATileEntities.STEEL_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, StainlessSteel, 4).input(stickLong, StainlessSteel, 4).outputs(GATileEntities.STAINLESS_STEEL_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, Titanium, 4).input(stickLong, Titanium, 4).outputs(GATileEntities.TITANIUM_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(200).input(plateOrCurved, TungstenSteel, 4).input(stickLong, TungstenSteel, 4).outputs(GATileEntities.TUNGSTENSTEEL_CRATE.getStackForm()).circuitMeta(2).buildAndRegister();
 
         // Energy Converters
         for (final EnergyConverterType type : EnergyConverterType.values()) {
@@ -208,6 +221,20 @@ public class MachineCraftingRecipes {
         ModHandler.addShapedRecipe("ga_energy_output_hatch_uhv", GATileEntities.ENERGY_OUTPUT[0].getStackForm(), "   ", " MC", "   ", 'M', GATileEntities.GA_HULLS[0].getStackForm(), 'C', new UnificationEntry(cableGtSingle, TungstenTitaniumCarbide));
         ModHandler.addShapedRecipe("ga_energy_output_hatch_uev", GATileEntities.ENERGY_OUTPUT[1].getStackForm(), "   ", " MC", "   ", 'M', GATileEntities.GA_HULLS[1].getStackForm(), 'C', new UnificationEntry(cableGtSingle, Pikyonium));
         ModHandler.addShapedRecipe("ga_energy_output_hatch_uiv", GATileEntities.ENERGY_OUTPUT[2].getStackForm(), "   ", " MC", "   ", 'M', GATileEntities.GA_HULLS[2].getStackForm(), 'C', new UnificationEntry(cableGtSingle, Cinobite));
+
+        // Maintenance Hatches
+        ModHandler.addShapedRecipe("ga_maintenance_hatch", GATileEntities.MAINTENANCE_HATCH[0].getStackForm(), "dwx", "hHc", "fsr", 'H', MetaTileEntities.HULL[1].getStackForm());
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(30).duration(500).inputs(MetaTileEntities.HULL[LV].getStackForm()).circuitMeta(21).outputs(GATileEntities.MAINTENANCE_HATCH[0].getStackForm()).buildAndRegister();
+        ModHandler.addShapedRecipe("ga_maintenance_hatch_auto_tape", GATileEntities.MAINTENANCE_HATCH[1].getStackForm(), "CMC", "RHR", "CMC", 'C', new UnificationEntry(circuit, Elite), 'M', GATileEntities.MAINTENANCE_HATCH[0].getStackForm(), 'R', MetaItems.ROBOT_ARM_IV, 'H', MetaTileEntities.HULL[IV].getStackForm());
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(1920).duration(500).inputs(MetaTileEntities.HULL[IV].getStackForm(), MetaItems.ROBOT_ARM_IV.getStackForm(2), GATileEntities.MAINTENANCE_HATCH[0].getStackForm(2)).input(circuit, Elite, 2).outputs(GATileEntities.MAINTENANCE_HATCH[1].getStackForm()).buildAndRegister();
+        GARecipeMaps.ASSEMBLY_LINE_RECIPES.recipeBuilder().EUt(491520).duration(1000).input(wireFine, Dubnium, 64).input(circuit, Superconductor, 4).inputs(MetaItems.ROBOT_ARM_UV.getStackForm(), MetaItems.ELECTRIC_PUMP_UV.getStackForm(), MetaItems.CONVEYOR_MODULE_UV.getStackForm(), MetaItems.ENERGY_LAPOTRONIC_ORB2.getStackForm(), GAMetaItems.INSULATING_TAPE.getStackForm(64), GAMetaItems.INSULATING_TAPE.getStackForm(64), GATileEntities.MAINTENANCE_HATCH[1].getStackForm()).fluidInputs(SolderingAlloy.getFluid(1296), Lubricant.getFluid(64000)).outputs(GATileEntities.MAINTENANCE_HATCH[2].getStackForm()).buildAndRegister();
+
+        //Quadruple and Nonuple Inputs and Outputs
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(120).duration(100).inputs(MetaTileEntities.HULL[HV].getStackForm()).input(pipeLarge, Titanium, 4).circuitMeta(0).outputs(GATileEntities.INPUT_HATCH_MULTI.get(0).getStackForm()).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(120).duration(100).inputs(MetaTileEntities.HULL[HV].getStackForm()).input(pipeLarge, Titanium, 4).circuitMeta(1).outputs(GATileEntities.OUTPUT_HATCH_MULTI.get(0).getStackForm()).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(1920).duration(100).inputs(MetaTileEntities.HULL[IV].getStackForm()).input(pipeLarge, TungstenSteel, 9).circuitMeta(0).outputs(GATileEntities.INPUT_HATCH_MULTI.get(1).getStackForm()).buildAndRegister();
+        ASSEMBLER_RECIPES.recipeBuilder().EUt(1920).duration(100).inputs(MetaTileEntities.HULL[IV].getStackForm()).input(pipeLarge, TungstenSteel, 9).circuitMeta(1).outputs(GATileEntities.OUTPUT_HATCH_MULTI.get(1).getStackForm()).buildAndRegister();
+
 
     }
 }
