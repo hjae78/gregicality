@@ -57,14 +57,16 @@ public class MetaTileEntityMufflerHatch extends MetaTileEntityMultiblockPart imp
     @Override
     public void update() {
         super.update();
-
-        if (!getWorld().isRemote) {
-            if (getOffsetTimer() % 10 == 0)
-                this.frontFaceFree = checkFrontFaceFree();
+        if (getWorld().isRemote) {
+            return;
+        }
+        if (getOffsetTimer() % 10 == 0) {
+            this.frontFaceFree = checkFrontFaceFree();
         }
         GARecipeMapMultiblockController controller = (GARecipeMapMultiblockController) getController();
         if (controller != null && controller.isActive())
             pollutionParticles();
+
     }
 
     // Leaving this here for now to show old behavior
